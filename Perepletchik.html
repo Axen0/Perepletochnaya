@@ -91,7 +91,6 @@ main{padding:34px 0 60px}
 .replace:hover{border-color:var(--gold);color:var(--gold)}
 .replace.gold{border-color:var(--gold-soft);color:var(--gold)}
 
-/* панель метаданных */
 .meta-panel{margin-top:18px;border:1px solid var(--gold-soft);background:var(--ink-3);border-radius:10px;padding:18px;animation:rise .35s both}
 .mp-head{display:flex;justify-content:space-between;align-items:center}
 .mp-head h3{font-family:'Prata',serif;font-weight:400;font-size:1.2rem;color:var(--gold)}
@@ -112,7 +111,6 @@ main{padding:34px 0 60px}
 .btn-small.ghost{background:none;border:1px solid var(--paper-faint);color:var(--paper-dim)}
 .btn-small.ghost:hover{border-color:var(--gold);color:var(--gold)}
 
-/* переключатель режима */
 .seg{position:relative;display:grid;grid-template-columns:1fr 1fr;background:rgba(236,225,201,.06);border:1px solid var(--paper-faint);border-radius:9px;padding:4px;margin-top:20px}
 .seg button{position:relative;z-index:2;background:none;border:0;color:var(--paper-dim);font-weight:600;font-size:.95rem;padding:11px 8px;cursor:pointer;letter-spacing:.02em;transition:color .3s;border-radius:6px}
 .seg button.on{color:#1c1710}
@@ -123,7 +121,6 @@ main{padding:34px 0 60px}
 .panel.on{display:block;animation:rise .4s both}
 @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-/* список глав */
 .ch-head{margin:18px 0 4px;font-size:.95rem}
 .ch-head b{color:var(--gold)}
 .ch-tip{color:var(--paper-dim);font-size:.8rem;margin-bottom:8px}
@@ -175,6 +172,13 @@ li.edited .ch-i::after{content:' ✎';font-size:.85em}
 .sum{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .sum p{font-size:.95rem}
 .sum b{color:var(--gold)}
+.fmt-seg{position:relative;display:inline-grid;grid-auto-flow:column;grid-auto-columns:max-content;background:rgba(236,225,201,.06);border:1px solid var(--paper-faint);border-radius:8px;padding:3px}
+.fmt-seg button{position:relative;z-index:2;background:none;border:0;color:var(--paper-dim);font-weight:600;font-size:.78rem;letter-spacing:.06em;padding:6px 13px;cursor:pointer;transition:color .3s;border-radius:5px;text-transform:uppercase}
+.fmt-seg button.on{color:#1c1710}
+.thumb3{position:absolute;z-index:1;top:3px;bottom:3px;left:3px;width:calc((100% - 6px)/3);background:var(--paper);border-radius:5px;
+  transition:transform .32s cubic-bezier(.6,.15,.1,1);box-shadow:0 3px 10px rgba(0,0,0,.35)}
+.fmt-seg[data-fmt="txt"] .thumb3{transform:translateX(100%)}
+.fmt-seg[data-fmt="both"] .thumb3{transform:translateX(200%)}
 .btn-gold{background:linear-gradient(180deg,#d8b26a,#b58f45);color:#241c0e;border:1px solid #96742f;border-radius:8px;
   padding:11px 18px;font-weight:700;font-size:.88rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;
   box-shadow:0 12px 24px -12px rgba(201,163,90,.6);transition:.25s}
@@ -198,7 +202,6 @@ li.edited .ch-i::after{content:' ✎';font-size:.85em}
 .dl:hover,.ed:hover{background:var(--text-ink);color:var(--paper);border-color:var(--text-ink);transform:translateY(-2px)}
 .hidden{display:none!important}
 
-/* модальное окно файла */
 .modal-bg{position:fixed;inset:0;background:rgba(6,10,16,.74);z-index:60;display:grid;place-items:center;padding:20px;animation:fadeIn .25s both}
 @keyframes fadeIn{from{opacity:0}}
 .modal{background:var(--ink-2);border:1px solid var(--gold-soft);border-radius:12px;padding:22px;width:min(540px,100%);animation:rise .3s both;max-height:88vh;overflow:auto}
@@ -287,13 +290,12 @@ footer .orn{color:var(--gold)}
           </div>
         </div>
 
-        <!-- редактор метаданных книги -->
         <div class="meta-panel hidden" id="metaPanel">
           <div class="mp-head">
             <h3>Метаданные книги</h3>
             <button class="mp-close" id="metaClose" title="Свернуть">✕</button>
           </div>
-          <p class="mp-note">Всё, что вы измените здесь, будет вшито и в каждую готовую часть.</p>
+          <p class="mp-note">Всё, что вы измените здесь, будет вшито в каждую готовую часть — и в FB2, и в TXT.</p>
           <div class="f-grid">
             <div class="field full"><label for="fTitle">Название книги</label><input id="fTitle"></div>
             <div class="field"><label for="fAuthor">Автор</label><input id="fAuthor" placeholder="Имя Фамилия"></div>
@@ -372,6 +374,12 @@ footer .orn{color:var(--gold)}
         <div class="hidden" id="shelf">
           <div class="sum">
             <p id="sumText"></p>
+            <div class="fmt-seg" id="fmtSeg" data-fmt="fb2" title="Формат скачивания">
+              <button data-f="fb2" class="on">FB2</button>
+              <button data-f="txt">TXT</button>
+              <button data-f="both">оба</button>
+              <span class="thumb3"></span>
+            </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn-gold" id="zipBtn">⤓ Скачать всё (ZIP)</button>
               <button class="btn-ghost" id="clearShelf">Очистить</button>
@@ -388,18 +396,17 @@ footer .orn{color:var(--gold)}
 <footer>
   <div class="wrap">
     <span><span class="orn">❦</span> Переплётная — FB2 → главы или равные части</span>
-    <span>исходная книга не изменяется · метаданные редактируются и наследуются частями</span>
+    <span>экспорт в FB2 и TXT · метаданные редактируются и наследуются частями</span>
   </div>
 </footer>
 
-<!-- модальное окно метаданных файла -->
 <div class="modal-bg hidden" id="modalBg">
   <div class="modal" role="dialog" aria-modal="true" aria-label="Метаданные файла">
     <h3>Метаданные файла</h3>
     <p class="sub" id="modalSub"></p>
     <div class="f-grid">
       <div class="field full"><label for="mTitle">Название книги внутри файла</label><input id="mTitle"></div>
-      <div class="field full"><label for="mFile">Имя файла</label><input id="mFile"></div>
+      <div class="field full"><label for="mFile">Имя файла (без расширения)</label><input id="mFile"></div>
       <div class="field full"><label for="mAnno">Аннотация (пусто = унаследована от книги)</label><textarea id="mAnno" rows="4"></textarea></div>
     </div>
     <div class="meta-actions">
@@ -419,7 +426,7 @@ const XS=new XMLSerializer();
 const XLINK='http://www.w3.org/1999/xlink';
 const SPINES=['#b6404c','#3e7d76','#b58f45','#7c5470','#5c7248','#8a5a44'];
 
-let book=null, mode='chapters', results=[], lastMode='', lastN=0, busy=false, editIdx=-1;
+let book=null, mode='chapters', fmt='fb2', results=[], lastMode='', lastN=0, busy=false, editIdx=-1;
 
 /* ── утилиты ── */
 const byNS=(root,name)=>[...root.getElementsByTagNameNS('*',name)];
@@ -432,9 +439,10 @@ const cleanName=s=>s.replace(/[\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').trim().sl
 const tick=()=>new Promise(r=>setTimeout(r,0));
 const chTitle=ch=>ch.customTitle??ch.origTitle;
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),4200)}
-function countUp(el,end,fmt=v=>fmtNum(v)){const t0=performance.now(),dur=800;
-  (function f(t){const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=fmt(Math.round(end*e));if(p<1)requestAnimationFrame(f)})(t0)}
+function countUp(el,end,fmtF=v=>fmtNum(v)){const t0=performance.now(),dur=800;
+  (function f(t){const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=fmtF(Math.round(end*e));if(p<1)requestAnimationFrame(f)})(t0)}
 function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+function invalidateResults(){results.forEach(r=>{r.xml=null;r.txt=null})}
 
 /* ── загрузка книги ── */
 async function handleFile(file){
@@ -540,7 +548,6 @@ function renderChapterList(){
   $('chList').querySelectorAll('.ch-t').forEach(s=>s.textContent=chTitle(book.chapters[+s.dataset.i])||'Глава без названия');
 }
 
-/* редактирование названий глав */
 $('chList').addEventListener('click',e=>{
   const t=e.target.closest('.ch-t');if(!t)return;
   const idx=+t.dataset.i, ch=book.chapters[idx];
@@ -557,7 +564,7 @@ $('chList').addEventListener('click',e=>{
 });
 function afterChapterEdit(){
   if(!results.length)return;
-  results.forEach(r=>r.xml=null);
+  invalidateResults();
   renderShelfRows();
   $('status').textContent='Названия обновлены — готовые файлы пересоберутся при скачивании.';
 }
@@ -614,7 +621,7 @@ $('applyMeta').onclick=async()=>{
   if(gv){const g=makeEl('genre');g.textContent=gv;ti.insertBefore(g,ti.firstChild);}
 
   let lg=firstChild(ti,'lang');const lv=$('fLang').value.trim();
-  if(lv){if(!lg){lg=makeEl('lang');bt.insertAdjacentElement?ti.insertBefore(lg,bt.nextSibling):ti.appendChild(lg)}lg.textContent=lv}
+  if(lv){if(!lg){lg=makeEl('lang');ti.insertBefore(lg,bt.nextSibling)}lg.textContent=lv}
   else if(lg)lg.remove();
 
   setAnnotationNode(ti,$('fAnno').value.trim());
@@ -624,7 +631,7 @@ $('applyMeta').onclick=async()=>{
   book.author=readMeta(d).author;
   updateBookDisplay();
 
-  results.forEach(r=>r.xml=null);
+  invalidateResults();
   if(results.length){
     $('status').textContent='Пересобираю готовые файлы с новыми метаданными…';
     for(let i=0;i<results.length;i++){buildResultXml(results[i]);if(i%2===0)await tick();}
@@ -639,7 +646,7 @@ $('resetMeta').onclick=()=>{
   book.descrNode=book.descrOriginal.cloneNode(true);
   book.descrIds=collectHrefs([book.descrNode]);
   fillMetaForm();
-  results.forEach(r=>r.xml=null);
+  invalidateResults();
   $('status').textContent='Исходные метаданные восстановлены.'+(results.length?' Файлы пересоберутся при скачивании.':'');
 };
 
@@ -678,7 +685,14 @@ function updateGo(){
   }
 }
 
-/* ── сборка результатов ── */
+/* формат скачивания */
+$('fmtSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  fmt=b.dataset.f;$('fmtSeg').dataset.fmt=fmt;
+  [...$('fmtSeg').querySelectorAll('button')].forEach(x=>x.classList.toggle('on',x===b));
+});
+
+/* ── сборка FB2 ── */
 function notesFor(need){
   return book.extraBodies.map(eb=>{
     const kept=eb.sections.filter(s=>s.ids.some(id=>need.has(id)));
@@ -727,11 +741,73 @@ function buildResultXml(r){
   r.size=r.xml.length;
   return r.xml;
 }
-function resultName(r){
+
+/* ── сборка TXT ── */
+function extractBlocksFrom(root){
+  const out=[];
+  const TXT=new Set(['p','subtitle','v','text-author','td']);
+  const walkKids=(n,skipDirectTitle)=>{
+    let skipped=!skipDirectTitle;
+    for(const c of [...n.children]){
+      const tag=c.localName.toLowerCase();
+      if(tag==='title'){
+        if(!skipped){skipped=true;continue;}
+        kids(c,'p').forEach(p=>{const t=p.textContent.replace(/\s+/g,' ').trim();if(t)out.push({tag:'heading',t});});
+        continue;
+      }
+      if(TXT.has(tag)){
+        const t=c.textContent.replace(/\s+/g,' ').trim();
+        if(t)out.push({tag,t});
+      } else walkKids(c,false);
+    }
+  };
+  const rtag=root.localName.toLowerCase();
+  if(TXT.has(rtag)){
+    const t=root.textContent.replace(/\s+/g,' ').trim();
+    if(t)out.push({tag:rtag,t});
+  } else walkKids(root, rtag==='section');
+  return out;
+}
+function renderTxtItems(items){
+  let s='';
+  for(const it of items){
+    if(it.tag==='v')s+=it.t+'\n';
+    else if(it.tag==='heading')s+='\n'+it.t+'\n\n';
+    else s+=it.t+'\n\n';
+  }
+  return s;
+}
+function buildResultTxt(r){
+  if(r.txt)return r.txt;
+  const title=r.customTitle??currentBookTitle();
+  const sub=r.kind==='chapter'?chTitle(book.chapters[r.idx]):('Часть '+r.k+' из '+r.total);
+  let head=title+'\n';
+  if(book.author)head+=book.author+'\n';
+  head+='\n'+sub.toUpperCase()+'\n';
+  const anno=r.customAnno!=null?r.customAnno:readMeta(book.descrNode).anno;
+  if(anno)head+='\n'+anno.trim()+'\n';
+  let items;
+  if(r.kind==='chapter')items=extractBlocksFrom(book.chapters[r.idx].node);
+  else{items=[];for(const b of r.blocks)items=items.concat(extractBlocksFrom(b.node));}
+  r.txt=(head+'\n— — —\n\n'+renderTxtItems(items)).replace(/\n{3,}/g,'\n\n').trimEnd()+'\n';
+  return r.txt;
+}
+function fb2Blob(xml){return new Blob([xml],{type:'application/x-fictionbook+xml'})}
+function txtBlob(txt){return new Blob(['\uFEFF'+txt],{type:'text/plain;charset=utf-8'})}
+
+/* ── имена ── */
+function baseName(r){
   if(r.customFileName)return r.customFileName;
-  if(r.kind==='chapter'){const ch=book.chapters[r.idx];
-    return String(r.idx+1).padStart(2,'0')+' — '+cleanName(chTitle(ch))+'.fb2'}
-  return String(r.k).padStart(2,'0')+' — Часть '+r.k+' из '+r.total+'.fb2';
+  if(r.kind==='chapter')return String(r.idx+1).padStart(2,'0')+' — '+cleanName(chTitle(book.chapters[r.idx]));
+  return String(r.k).padStart(2,'0')+' — Часть '+r.k+' из '+r.total;
+}
+function resultName(r,ext){return baseName(r)+'.'+ext}
+function downloadResult(r){
+  const doFb2=()=>download(fb2Blob(buildResultXml(r)),resultName(r,'fb2'));
+  const doTxt=()=>download(txtBlob(buildResultTxt(r)),resultName(r,'txt'));
+  if(fmt==='fb2')doFb2();
+  else if(fmt==='txt')doTxt();
+  else{doFb2();setTimeout(doTxt,300);}
 }
 
 /* ── разрезание ── */
@@ -745,7 +821,7 @@ async function run(){
     if(mode==='chapters'){
       lastMode='chapters';const chs=book.chapters;lastN=chs.length;
       for(let i=0;i<chs.length;i++){
-        const r={kind:'chapter',idx:i,chars:chs[i].chars,customTitle:null,customAnno:null,customFileName:null,xml:null,size:0};
+        const r={kind:'chapter',idx:i,chars:chs[i].chars,customTitle:null,customAnno:null,customFileName:null,xml:null,txt:null,size:0};
         buildResultXml(r);results.push(r);
         setProg(i+1,chs.length);if(i%2===0)await tick();
       }
@@ -765,7 +841,7 @@ async function run(){
       if(parts.length<N)$('status').textContent='Частей получилось '+parts.length+' — в книге меньше блоков текста.';
       for(let k=0;k<parts.length;k++){
         const chars=parts[k].reduce((s,b)=>s+b.size,0);
-        const r={kind:'part',k:k+1,total:parts.length,blocks:parts[k],chars,customTitle:null,customAnno:null,customFileName:null,xml:null,size:0};
+        const r={kind:'part',k:k+1,total:parts.length,blocks:parts[k],chars,customTitle:null,customAnno:null,customFileName:null,xml:null,txt:null,size:0};
         buildResultXml(r);results.push(r);
         setProg(k+1,parts.length);if(k%2===0)await tick();
       }
@@ -800,22 +876,21 @@ function renderShelfRows(){
     li.style.setProperty('--spine',SPINES[i%SPINES.length]);
     const tuned=(r.customTitle||r.customAnno!=null||r.customFileName)?'<span class="tuned"> · изменено</span>':'';
     li.innerHTML='<span class="f-num">'+String(i+1).padStart(2,'0')+'</span>'+
-      '<div class="f-info"><div class="f-name"></div><div class="f-meta">FB2 · '+fmtBytes(r.size||0)+' · ≈ '+fmtNum(r.chars)+' зн.'+tuned+'</div></div>'+
+      '<div class="f-info"><div class="f-name"></div><div class="f-meta">≈ '+fmtNum(r.chars)+' зн.'+tuned+'</div></div>'+
       '<div class="f-btns">'+
       '<button class="ed" title="Изменить метаданные и имя файла"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M11.3 2.3a1.6 1.6 0 0 1 2.3 2.3L5.4 12.8l-3 .7.7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>'+
-      '<button class="dl" title="Скачать"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0 3.2-3.2M8 10 4.8 6.8M2.5 13.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
+      '<button class="dl" title="Скачать (формат выбран на полке)"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0 3.2-3.2M8 10 4.8 6.8M2.5 13.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
       '</div>';
-    li.querySelector('.f-name').textContent=resultName(r).replace(/\.fb2$/i,'');
+    li.querySelector('.f-name').textContent=baseName(r);
     list.appendChild(li);
   });
 }
 $('files').addEventListener('click',e=>{
   const li=e.target.closest('.file');if(!li)return;
   const i=+li.dataset.i,r=results[i];
-  if(e.target.closest('.dl'))download(fb2Blob(buildResultXml(r)),resultName(r));
+  if(e.target.closest('.dl'))downloadResult(r);
   if(e.target.closest('.ed'))openEdit(i);
 });
-function fb2Blob(xml){return new Blob([xml],{type:'application/x-fictionbook+xml'})}
 function resetShelf(){results=[];$('shelf').classList.add('hidden');$('emptyShelf').classList.remove('hidden')}
 $('clearShelf').onclick=resetShelf;
 $('zipBtn').onclick=async()=>{
@@ -823,7 +898,10 @@ $('zipBtn').onclick=async()=>{
   $('zipBtn').disabled=true;$('zipBtn').textContent='Собираю ZIP…';
   try{
     const zip=new JSZip();
-    results.forEach(r=>zip.file(resultName(r),fb2Blob(buildResultXml(r))));
+    for(const r of results){
+      if(fmt!=='txt')zip.file(resultName(r,'fb2'),fb2Blob(buildResultXml(r)));
+      if(fmt!=='fb2')zip.file(resultName(r,'txt'),txtBlob(buildResultTxt(r)));
+    }
     const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}});
     const base=cleanName(book.title)||'book';
     const tail=lastMode==='chapters'?'по главам':'на '+lastN+' '+plural(lastN,'часть','части','частей');
@@ -842,9 +920,9 @@ function annoPreview(){
 }
 function openEdit(i){
   editIdx=i;const r=results[i];
-  $('modalSub').textContent=resultName(r);
+  $('modalSub').textContent=baseName(r);
   $('mTitle').value=r.customTitle??currentBookTitle();
-  $('mFile').value=resultName(r);
+  $('mFile').value=baseName(r);
   $('mAnno').value=r.customAnno??'';
   $('mAnno').placeholder=annoPreview();
   $('modalBg').classList.remove('hidden');
@@ -855,10 +933,11 @@ $('mSave').onclick=()=>{
   if(editIdx<0)return;
   const r=results[editIdx];
   r.customTitle=$('mTitle').value.trim()||null;
-  r.customFileName=cleanName($('mFile').value.trim().replace(/\.fb2$/i,''))+'.fb2';
+  r.customFileName=cleanName($('mFile').value.trim())||null;
   const av=$('mAnno').value.trim();
   r.customAnno=av===''?null:av;
-  r.xml=null;buildResultXml(r);
+  r.xml=null;r.txt=null;
+  buildResultXml(r);
   renderShelfRows();closeEdit();
   $('status').textContent='Файл обновлён.';
 };
@@ -866,7 +945,8 @@ $('mInherit').onclick=()=>{
   if(editIdx<0)return;
   const r=results[editIdx];
   r.customTitle=null;r.customAnno=null;r.customFileName=null;
-  r.xml=null;buildResultXml(r);
+  r.xml=null;r.txt=null;
+  buildResultXml(r);
   renderShelfRows();closeEdit();
   $('status').textContent='Файлу возвращены метаданные книги.';
 };
