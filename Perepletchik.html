@@ -7,7 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>✂️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Prata&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Playfair+Display:wght@400;600&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 :root{
@@ -17,6 +17,16 @@
   --crimson:#b6404c; --crimson-deep:#8f2f3a;
   --gold:#c9a35a; --gold-soft:rgba(201,163,90,.35);
   --teal:#3e7d76; --plum:#7c5470; --moss:#5c7248;
+  --display:'Prata',Georgia,serif;
+  --btn1:#c04b57; --btn2:#993441; --btnBorder:#7e2833;
+  --cov1:#a03a46; --cov2:#7c2b36; --cov3:#5f2029;
+}
+/* ─── ENGLISH EDITION ─── */
+html[lang="en"]{
+  --display:'Playfair Display',Georgia,serif;
+  --crimson:#3e7f72; --crimson-deep:#2c5a51;
+  --btn1:#47897b; --btn2:#316156; --btnBorder:#22473f;
+  --cov1:#2f6d61; --cov2:#23534a; --cov3:#163832;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -33,7 +43,7 @@ button{font-family:inherit}
 
 .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.055;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E");}
-.glyphs span{position:fixed;font-family:'Prata',serif;color:rgba(201,163,90,.055);
+.glyphs span{position:fixed;font-family:var(--display);color:rgba(201,163,90,.055);
   font-size:clamp(120px,18vw,260px);z-index:0;user-select:none;pointer-events:none;
   animation:drift var(--d,26s) ease-in-out infinite alternate;}
 @keyframes drift{from{transform:translateY(-20px) rotate(-5deg)}to{transform:translateY(24px) rotate(6deg)}}
@@ -47,9 +57,15 @@ header{border-bottom:1px solid var(--gold-soft)}
 .mark{width:56px;height:56px;flex:none;display:grid;place-items:center;border:1px solid var(--gold);border-radius:50%;
   color:var(--gold);font-size:26px;background:rgba(201,163,90,.06);transition:transform .5s cubic-bezier(.3,1.4,.4,1)}
 .brand:hover .mark{transform:rotate(-14deg) scale(1.06)}
-h1{font-family:'Prata',serif;font-weight:400;font-size:clamp(2rem,4.6vw,3.1rem);letter-spacing:.02em;line-height:1}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(2rem,4.6vw,3.1rem);letter-spacing:.02em;line-height:1}
 .tag{color:var(--paper-dim);font-size:.92rem;letter-spacing:.14em;text-transform:uppercase;margin-top:6px}
-.trust{display:flex;align-items:center;gap:9px;color:var(--paper-dim);font-size:.86rem;padding-bottom:6px}
+.mast-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;padding-bottom:6px}
+.lang-seg{position:relative;display:inline-grid;grid-auto-flow:column;background:rgba(236,225,201,.06);border:1px solid var(--paper-faint);border-radius:7px;padding:2px}
+.lang-seg button{position:relative;z-index:2;background:none;border:0;color:var(--paper-dim);font-weight:700;font-size:.72rem;letter-spacing:.14em;padding:5px 13px;cursor:pointer;border-radius:5px;transition:color .3s}
+.lang-seg button.on{color:#1c1710}
+.thumbL{position:absolute;z-index:1;top:2px;bottom:2px;left:2px;width:calc(50% - 2px);background:var(--paper);border-radius:5px;transition:transform .3s cubic-bezier(.6,.15,.1,1)}
+.lang-seg[data-l="en"] .thumbL{transform:translateX(100%)}
+.trust{display:flex;align-items:center;gap:9px;color:var(--paper-dim);font-size:.86rem}
 .dot{width:8px;height:8px;border-radius:50%;background:#7fbf8e;box-shadow:0 0 0 0 rgba(127,191,142,.5);animation:pulse 2.4s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(127,191,142,.45)}70%{box-shadow:0 0 0 9px rgba(127,191,142,0)}100%{box-shadow:0 0 0 0 rgba(127,191,142,0)}}
 
@@ -67,33 +83,36 @@ main{padding:34px 0 60px}
 .drop.over{transform:scale(1.012)}
 .drop svg{width:92px;height:92px;margin-bottom:14px;transition:transform .5s cubic-bezier(.3,1.5,.4,1)}
 .drop:hover svg,.drop.over svg{transform:rotate(-4deg) scale(1.06)}
-.drop-big{font-family:'Prata',serif;font-size:1.35rem;margin-bottom:6px}
+.drop-big{font-family:var(--display);font-size:1.35rem;margin-bottom:6px}
 .drop-small{color:var(--paper-dim);font-size:.9rem}
 
 .bookcard{display:flex;gap:24px;align-items:center;margin-top:18px;animation:rise .5s both}
 .cover{width:136px;height:194px;flex:none;position:relative;transform:perspective(700px) rotateY(-16deg) rotateX(2deg);
   transition:transform .6s cubic-bezier(.2,.8,.2,1);filter:drop-shadow(14px 18px 22px rgba(0,0,0,.55))}
 .bookcard:hover .cover{transform:perspective(700px) rotateY(-4deg) rotateX(1deg)}
-.cover-face{position:absolute;inset:0;border-radius:4px 8px 8px 4px;background:linear-gradient(150deg,#a03a46 0%,#7c2b36 55%,#5f2029 100%)}
-.cover-spine{position:absolute;left:0;top:0;bottom:0;width:13px;border-radius:4px 0 0 4px;background:linear-gradient(90deg,#4a181f,#7c2b36 60%,#a03a46);box-shadow:inset -2px 0 3px rgba(0,0,0,.4)}
+.cover-face{position:absolute;inset:0;border-radius:4px 8px 8px 4px;background:linear-gradient(150deg,var(--cov1) 0%,var(--cov2) 55%,var(--cov3) 100%)}
+.cover-spine{position:absolute;left:0;top:0;bottom:0;width:13px;border-radius:4px 0 0 4px;background:linear-gradient(90deg,var(--cov3),var(--cov2) 60%,var(--cov1));box-shadow:inset -2px 0 3px rgba(0,0,0,.4);z-index:3}
 .cover-frame{position:absolute;inset:9px 10px 9px 20px;border:1px solid rgba(233,196,124,.75);padding:12px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;overflow:hidden}
+.cover.has-img .cover-frame{display:none}
+#cvImg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px 8px 8px 4px;z-index:2}
 .cover-orn{color:#e9c47c;font-size:15px}
-.cover-title{font-family:'Prata',serif;color:#f3e8d2;font-size:.95rem;line-height:1.25;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.cover-title{font-family:var(--display);color:#f3e8d2;font-size:.95rem;line-height:1.25;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
 .cover-author{margin-top:auto;color:#e9c47c;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase}
 .book-meta{min-width:0;flex:1}
-.book-name{font-family:'Prata',serif;font-size:1.5rem;line-height:1.2;overflow-wrap:anywhere}
+.book-name{font-family:var(--display);font-size:1.5rem;line-height:1.2;overflow-wrap:anywhere}
 .book-author{color:var(--paper-dim);margin:4px 0 14px;font-size:.95rem}
 .stats{display:flex;gap:26px;flex-wrap:wrap}
-.stat b{display:block;font-family:'Prata',serif;font-weight:400;font-size:1.5rem;color:var(--paper)}
+.stat b{display:block;font-family:var(--display);font-weight:400;font-size:1.5rem;color:var(--paper)}
 .stat span{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-dim)}
 .card-btns{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
 .replace{background:none;border:1px solid var(--paper-faint);color:var(--paper-dim);border-radius:6px;padding:6px 12px;font-size:.82rem;cursor:pointer;transition:.25s}
 .replace:hover{border-color:var(--gold);color:var(--gold)}
 .replace.gold{border-color:var(--gold-soft);color:var(--gold)}
 
+/* редактор метаданных */
 .meta-panel{margin-top:18px;border:1px solid var(--gold-soft);background:var(--ink-3);border-radius:10px;padding:18px;animation:rise .35s both}
 .mp-head{display:flex;justify-content:space-between;align-items:center}
-.mp-head h3{font-family:'Prata',serif;font-weight:400;font-size:1.2rem;color:var(--gold)}
+.mp-head h3{font-family:var(--display);font-weight:400;font-size:1.2rem;color:var(--gold)}
 .mp-close{background:none;border:0;color:var(--paper-dim);font-size:1.1rem;cursor:pointer;transition:.2s;padding:2px 6px}
 .mp-close:hover{color:var(--crimson);transform:rotate(90deg)}
 .mp-note{color:var(--paper-dim);font-size:.83rem;margin:6px 0 14px}
@@ -104,25 +123,36 @@ main{padding:34px 0 60px}
 .field input,.field textarea{width:100%;background:var(--ink-2);border:1px solid var(--paper-faint);color:var(--paper);border-radius:7px;padding:9px 11px;font:500 .95rem 'Jost';transition:border-color .25s}
 .field input:focus,.field textarea:focus{border-color:var(--gold);outline:none}
 .field textarea{resize:vertical;min-height:74px;line-height:1.45}
-.meta-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.cover-row{display:flex;gap:14px;align-items:center}
+.cov-box{width:64px;height:92px;flex:none;border-radius:4px;border:1px solid var(--gold-soft);background:var(--ink-2);display:grid;place-items:center;overflow:hidden}
+.cov-box img{width:100%;height:100%;object-fit:cover}
+.cov-ph{color:var(--paper-dim);font-size:1.3rem}
+.cov-btns{display:flex;flex-direction:column;gap:8px}
+.pub{margin-top:14px;border:1px solid var(--paper-faint);border-radius:8px;padding:12px 14px}
+.pub summary{cursor:pointer;color:var(--gold);font-weight:600;font-size:.9rem;letter-spacing:.04em;list-style-position:inside}
+.meta-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
 .btn-small{padding:9px 16px;border-radius:7px;font-weight:600;font-size:.85rem;cursor:pointer;transition:.22s;letter-spacing:.02em}
 .btn-small.primary{background:linear-gradient(180deg,#d8b26a,#b58f45);border:1px solid #96742f;color:#241c0e}
 .btn-small.primary:hover{transform:translateY(-1px);box-shadow:0 8px 18px -8px rgba(201,163,90,.6)}
 .btn-small.ghost{background:none;border:1px solid var(--paper-faint);color:var(--paper-dim)}
-.btn-small.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn-small.ghost:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.btn-small.ghost:disabled{opacity:.4;cursor:not-allowed}
 
-.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;background:rgba(236,225,201,.06);border:1px solid var(--paper-faint);border-radius:9px;padding:4px;margin-top:20px}
-.seg button{position:relative;z-index:2;background:none;border:0;color:var(--paper-dim);font-weight:600;font-size:.95rem;padding:11px 8px;cursor:pointer;letter-spacing:.02em;transition:color .3s;border-radius:6px}
+/* три режима */
+.seg{position:relative;display:grid;grid-template-columns:repeat(3,1fr);background:rgba(236,225,201,.06);border:1px solid var(--paper-faint);border-radius:9px;padding:4px;margin-top:20px}
+.seg button{position:relative;z-index:2;background:none;border:0;color:var(--paper-dim);font-weight:600;font-size:.88rem;padding:11px 6px;cursor:pointer;letter-spacing:.01em;transition:color .3s;border-radius:6px}
 .seg button.on{color:#1c1710}
-.thumb{position:absolute;z-index:1;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);background:var(--paper);border-radius:6px;
+.thumb{position:absolute;z-index:1;top:4px;bottom:4px;left:4px;width:calc((100% - 8px)/3);background:var(--paper);border-radius:6px;
   transition:transform .38s cubic-bezier(.6,.15,.1,1);box-shadow:0 4px 12px rgba(0,0,0,.35)}
 .seg[data-mode="size"] .thumb{transform:translateX(100%)}
+.seg[data-mode="whole"] .thumb{transform:translateX(200%)}
 .panel{display:none}
 .panel.on{display:block;animation:rise .4s both}
 @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.whole-note{margin-top:18px;color:var(--paper-dim);font-size:.93rem;line-height:1.55}
+.whole-note b{color:var(--gold);font-weight:600}
 
 .ch-head{margin:18px 0 4px;font-size:.95rem}
-.ch-head b{color:var(--gold)}
 .ch-tip{color:var(--paper-dim);font-size:.8rem;margin-bottom:8px}
 .ch-list{list-style:none;max-height:238px;overflow:auto;border:1px solid var(--paper-faint);border-radius:8px;padding:4px;scrollbar-width:thin;scrollbar-color:var(--gold-soft) transparent}
 .ch-list li{display:flex;gap:12px;align-items:baseline;padding:7px 10px;border-radius:6px;font-size:.92rem;transition:background .2s}
@@ -136,7 +166,7 @@ li.edited .ch-i::after{content:' ✎';font-size:.85em}
 .ch-s{margin-left:auto;color:var(--paper-dim);font-size:.78rem;white-space:nowrap}
 
 .warn{margin-top:18px;border:1px solid rgba(182,64,76,.5);background:rgba(182,64,76,.1);border-radius:9px;padding:16px 18px}
-.warn h3{font-family:'Prata',serif;font-weight:400;font-size:1.15rem;color:#e9a3ab;margin-bottom:6px}
+.warn h3{font-family:var(--display);font-weight:400;font-size:1.15rem;color:#e9a3ab;margin-bottom:6px}
 .warn p{color:#d9b8ad;font-size:.9rem;line-height:1.5}
 .warn button{margin-top:12px;background:none;border:1px solid rgba(233,163,171,.5);color:#e9a3ab;border-radius:6px;padding:7px 14px;font-size:.85rem;cursor:pointer;transition:.25s}
 .warn button:hover{background:rgba(182,64,76,.25);transform:translateY(-1px)}
@@ -153,10 +183,10 @@ li.edited .ch-i::after{content:' ✎';font-size:.85em}
 .hint.gold{color:var(--gold)}
 
 .btn-go{width:100%;margin-top:20px;padding:15px;border-radius:9px;cursor:pointer;
-  background:linear-gradient(180deg,#c04b57,#993441);color:#f7efe0;border:1px solid #7e2833;
+  background:linear-gradient(180deg,var(--btn1),var(--btn2));color:#f7efe0;border:1px solid var(--btnBorder);
   font-weight:700;font-size:.98rem;letter-spacing:.09em;text-transform:uppercase;
-  box-shadow:0 14px 28px -14px rgba(192,75,87,.65);transition:transform .25s,box-shadow .25s,opacity .25s}
-.btn-go:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 20px 34px -14px rgba(192,75,87,.75)}
+  box-shadow:0 14px 28px -14px rgba(0,0,0,.55);transition:transform .25s,box-shadow .25s,opacity .25s}
+.btn-go:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 20px 34px -14px rgba(0,0,0,.65)}
 .btn-go:active:not(:disabled){transform:translateY(0)}
 .btn-go:disabled{opacity:.4;cursor:not-allowed}
 .prog-wrap{margin-top:14px;display:none}
@@ -166,9 +196,9 @@ li.edited .ch-i::after{content:' ✎';font-size:.85em}
 .prog-label{display:flex;justify-content:space-between;margin-top:7px;font-size:.8rem;color:var(--paper-dim)}
 .status{margin-top:12px;font-size:.88rem;color:var(--gold);min-height:1.2em}
 
-/* полка */
 .empty-shelf{text-align:center;padding:44px 20px;color:var(--paper-dim)}
 .empty-shelf svg{width:150px;margin-bottom:16px;opacity:.8}
+.empty-shelf p+p{margin-top:4px}
 .sum{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .sum p{font-size:.95rem}
 .sum b{color:var(--gold)}
@@ -185,14 +215,14 @@ li.edited .ch-i::after{content:' ✎';font-size:.85em}
 .btn-gold:hover:not(:disabled){transform:translateY(-2px)}
 .btn-gold:disabled{opacity:.45;cursor:not-allowed}
 .btn-ghost{background:none;border:1px solid var(--paper-faint);color:var(--paper-dim);border-radius:8px;padding:11px 14px;font-size:.85rem;cursor:pointer;transition:.25s}
-.btn-ghost:hover{border-color:var(--crimson);color:#e9a3ab}
+.btn-ghost:hover{border-color:var(--crimson);color:var(--paper)}
 .files{list-style:none;display:flex;flex-direction:column;gap:9px;max-height:560px;overflow:auto;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--gold-soft) transparent}
-.file{display:flex;align-items:center;gap:12px;background:var(--paper);color:var(--text-ink);border-radius:6px;padding:11px 12px 11px 12px;
+.file{display:flex;align-items:center;gap:12px;background:var(--paper);color:var(--text-ink);border-radius:6px;padding:11px 12px;
   position:relative;overflow:hidden;animation:slideIn .45s both;transition:transform .22s,box-shadow .22s}
 .file::before{content:'';position:absolute;left:0;top:0;bottom:0;width:11px;background:var(--spine,var(--crimson));box-shadow:inset -2px 0 3px rgba(0,0,0,.3)}
 .file:hover{transform:translateX(5px);box-shadow:0 10px 22px -10px rgba(0,0,0,.6)}
 @keyframes slideIn{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
-.f-num{font-family:'Prata',serif;color:var(--text-ink-soft);min-width:24px;padding-left:10px}
+.f-num{font-family:var(--display);color:var(--text-ink-soft);min-width:24px;padding-left:10px}
 .f-info{min-width:0;flex:1}
 .f-name{font-weight:600;font-size:.94rem;overflow-wrap:anywhere}
 .f-meta{font-size:.78rem;color:var(--text-ink-soft);margin-top:2px}
@@ -205,7 +235,7 @@ li.edited .ch-i::after{content:' ✎';font-size:.85em}
 .modal-bg{position:fixed;inset:0;background:rgba(6,10,16,.74);z-index:60;display:grid;place-items:center;padding:20px;animation:fadeIn .25s both}
 @keyframes fadeIn{from{opacity:0}}
 .modal{background:var(--ink-2);border:1px solid var(--gold-soft);border-radius:12px;padding:22px;width:min(540px,100%);animation:rise .3s both;max-height:88vh;overflow:auto}
-.modal h3{font-family:'Prata',serif;font-weight:400;font-size:1.3rem;color:var(--gold)}
+.modal h3{font-family:var(--display);font-weight:400;font-size:1.3rem;color:var(--gold)}
 .modal .sub{color:var(--paper-dim);font-size:.85rem;margin:4px 0 16px;overflow-wrap:anywhere}
 
 footer{border-top:1px solid var(--gold-soft);padding:20px 0 30px;color:var(--paper-dim);font-size:.85rem}
@@ -235,23 +265,29 @@ footer .orn{color:var(--gold)}
     <div class="brand">
       <div class="mark">✂</div>
       <div>
-        <h1>Переплётная</h1>
-        <p class="tag">расшивочный станок для книг FB2</p>
+        <h1 data-i18n="brand">Переплётная</h1>
+        <p class="tag" data-i18n="tag">расшивочный станок для книг FB2</p>
       </div>
     </div>
-    <div class="trust"><span class="dot"></span>всё происходит в браузере — файлы никуда не отправляются</div>
+    <div class="mast-right">
+      <div class="lang-seg" id="langSeg" data-l="ru">
+        <button data-l="ru" class="on">RU</button>
+        <button data-l="en">EN</button>
+        <span class="thumbL"></span>
+      </div>
+      <div class="trust"><span class="dot"></span><span data-i18n="trust">всё происходит в браузере — файлы никуда не отправляются</span></div>
+    </div>
   </div>
 </header>
 
 <main class="wrap">
   <div class="grid">
 
-    <!-- СТАНОК -->
     <section>
-      <h2 class="col-title"><b>№ 1</b> Станок</h2>
+      <h2 class="col-title"><b>№ 1</b> <span data-i18n="bench">Станок</span></h2>
       <div class="panel-card">
 
-        <div class="drop" id="drop" tabindex="0" role="button" aria-label="Выбрать файл FB2">
+        <div class="drop" id="drop" tabindex="0" role="button" aria-label="FB2">
           <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
             <rect x="26" y="12" width="68" height="94" rx="6" stroke="#ece1c9" stroke-width="2.5"/>
             <path d="M40 34h40M40 46h40M40 58h26" stroke="#a89f8c" stroke-width="2.5" stroke-linecap="round"/>
@@ -260,14 +296,15 @@ footer .orn{color:var(--gold)}
             <circle cx="68" cy="86" r="5.5" stroke="#c9a35a" stroke-width="2.5"/>
             <path d="M55.5 81.5 66 62M64.5 81.5 54 62" stroke="#c9a35a" stroke-width="2.5" stroke-linecap="round"/>
           </svg>
-          <p class="drop-big">Перетащите сюда книгу в FB2</p>
-          <p class="drop-small">или нажмите, чтобы выбрать файл · формат FictionBook 2.x</p>
+          <p class="drop-big" data-i18n="dropBig">Перетащите сюда книгу в FB2</p>
+          <p class="drop-small" data-i18n="dropSmall">или нажмите, чтобы выбрать файл · формат FictionBook 2.x</p>
         </div>
         <input type="file" id="file" accept=".fb2,application/x-fictionbook+xml" hidden>
 
         <div class="bookcard hidden" id="bookcard">
-          <div class="cover">
+          <div class="cover" id="coverBox">
             <div class="cover-face"></div>
+            <img id="cvImg" class="hidden" alt="">
             <div class="cover-spine"></div>
             <div class="cover-frame">
               <div class="cover-orn">❦</div>
@@ -279,58 +316,89 @@ footer .orn{color:var(--gold)}
             <div class="book-name" id="bkTitle"></div>
             <div class="book-author" id="bkAuthor"></div>
             <div class="stats">
-              <div class="stat"><b id="stSize">0</b><span>размер</span></div>
-              <div class="stat"><b id="stChars">0</b><span>знаков</span></div>
-              <div class="stat"><b id="stCh">—</b><span>глав</span></div>
+              <div class="stat"><b id="stSize">0</b><span data-i18n="stSize">размер</span></div>
+              <div class="stat"><b id="stChars">0</b><span data-i18n="stChars">знаков</span></div>
+              <div class="stat"><b id="stCh">—</b><span data-i18n="stCh">глав</span></div>
             </div>
             <div class="card-btns">
-              <button class="replace gold" id="metaBtn">✎ Метаданные</button>
-              <button class="replace" id="replace">↺ Заменить книгу</button>
+              <button class="replace gold" id="metaBtn" data-i18n="metaBtn">✎ Метаданные</button>
+              <button class="replace" id="replace" data-i18n="replaceBtn">↺ Заменить книгу</button>
             </div>
           </div>
         </div>
 
+        <!-- ══ полный редактор метаданных ══ -->
         <div class="meta-panel hidden" id="metaPanel">
           <div class="mp-head">
-            <h3>Метаданные книги</h3>
-            <button class="mp-close" id="metaClose" title="Свернуть">✕</button>
+            <h3 data-i18n="metaTitle">Метаданные книги</h3>
+            <button class="mp-close" id="metaClose" title="✕">✕</button>
           </div>
-          <p class="mp-note">Всё, что вы измените здесь, будет вшито в каждую готовую часть — и в FB2, и в TXT.</p>
+          <p class="mp-note" data-i18n="metaNote">Всё, что вы измените здесь, будет вшито в каждый готовый файл — и в FB2, и в TXT.</p>
           <div class="f-grid">
-            <div class="field full"><label for="fTitle">Название книги</label><input id="fTitle"></div>
-            <div class="field"><label for="fAuthor">Автор</label><input id="fAuthor" placeholder="Имя Фамилия"></div>
-            <div class="field"><label for="fGenre">Жанр</label><input id="fGenre" placeholder="например: prose_classic"></div>
-            <div class="field"><label for="fLang">Язык</label><input id="fLang" placeholder="ru"></div>
-            <div class="field full"><label for="fAnno">Аннотация</label><textarea id="fAnno" rows="4" placeholder="Краткое описание книги…"></textarea></div>
+            <div class="field full"><label for="fTitle" data-i18n="lblTitle">Название книги</label><input id="fTitle"></div>
+            <div class="field full"><label for="fAuthor" data-i18n="lblAuthor">Автор(ы)</label><input id="fAuthor" data-i18n-ph="phAuthors" placeholder="Имя Фамилия; Имя Фамилия"></div>
+            <div class="field full"><label for="fTrans" data-i18n="lblTranslator">Переводчики</label><input id="fTrans" data-i18n-ph="phAuthors"></div>
+            <div class="field"><label for="fGenre" data-i18n="lblGenre">Жанр(ы)</label><input id="fGenre" data-i18n-ph="phGenres" placeholder="через запятую"></div>
+            <div class="field"><label for="fKeys" data-i18n="lblKeywords">Ключевые слова</label><input id="fKeys"></div>
+            <div class="field"><label for="fSeq" data-i18n="lblSeq">Серия</label><input id="fSeq"></div>
+            <div class="field"><label for="fSeqN" data-i18n="lblSeqNum">№ в серии</label><input id="fSeqN"></div>
+            <div class="field"><label for="fLang" data-i18n="lblLang">Язык</label><input id="fLang" placeholder="ru"></div>
+            <div class="field"><label for="fSrcLang" data-i18n="lblSrcLang">Язык оригинала</label><input id="fSrcLang" placeholder="en"></div>
+            <div class="field"><label for="fDate" data-i18n="lblDate">Дата</label><input id="fDate" data-i18n-ph="phDate" placeholder="например: 2005"></div>
+            <div class="field full"><label for="fAnno" data-i18n="lblAnno">Аннотация</label><textarea id="fAnno" rows="4" data-i18n-ph="phAnno" placeholder="Краткое описание книги…"></textarea></div>
+            <div class="field full">
+              <label data-i18n="covLabel">Обложка</label>
+              <div class="cover-row">
+                <div class="cov-box">
+                  <img id="covThumb" class="hidden" alt="">
+                  <span id="covPh" class="cov-ph">❦</span>
+                </div>
+                <div class="cov-btns">
+                  <button class="btn-small ghost" id="covUploadBtn" data-i18n="covUpload">Заменить…</button>
+                  <button class="btn-small ghost" id="covRemoveBtn" data-i18n="covRemove" disabled>Удалить</button>
+                </div>
+              </div>
+              <input type="file" id="covFile" accept="image/*" hidden>
+            </div>
           </div>
+          <details class="pub">
+            <summary data-i18n="pubTitle">Издательские данные</summary>
+            <div class="f-grid" style="margin-top:12px">
+              <div class="field"><label for="fPub" data-i18n="lblPublisher">Издательство</label><input id="fPub"></div>
+              <div class="field"><label for="fCity" data-i18n="lblCity">Город</label><input id="fCity"></div>
+              <div class="field"><label for="fYear" data-i18n="lblYear">Год</label><input id="fYear"></div>
+              <div class="field"><label for="fIsbn" data-i18n="lblIsbn">ISBN</label><input id="fIsbn"></div>
+            </div>
+          </details>
           <div class="meta-actions">
-            <button class="btn-small primary" id="applyMeta">Применить</button>
-            <button class="btn-small ghost" id="resetMeta">Восстановить исходные</button>
+            <button class="btn-small primary" id="applyMeta" data-i18n="apply">Применить</button>
+            <button class="btn-small ghost" id="resetMeta" data-i18n="resetOrig">Восстановить исходные</button>
           </div>
         </div>
 
         <div class="hidden" id="controls">
           <div class="seg" id="seg" data-mode="chapters">
-            <button id="mCh" class="on">По главам</button>
-            <button id="mSize">На равные части</button>
+            <button id="mCh" class="on" data-i18n="modeChapters">По главам</button>
+            <button id="mSize" data-i18n="modeSize">На равные части</button>
+            <button id="mWhole" data-i18n="modeWhole">Целиком</button>
             <span class="thumb"></span>
           </div>
 
           <div class="panel on" id="pCh">
             <div id="chFound" class="hidden">
-              <p class="ch-head">Найдено <b id="chCount">0</b> глав:</p>
-              <p class="ch-tip">✎ нажмите на название главы, чтобы переименовать её</p>
+              <p class="ch-head" id="chHead"></p>
+              <p class="ch-tip" data-i18n="chTip">✎ нажмите на название главы, чтобы переименовать её</p>
               <ol class="ch-list" id="chList"></ol>
             </div>
             <div id="chNone" class="warn hidden">
-              <h3>Глав в книге не найдено</h3>
-              <p>Книга свёрстана единым потоком текста, без разделов-<i>section</i>. Такую книгу нельзя расшить по главам, но можно разрезать на равные части по объёму.</p>
-              <button id="toSize">→ Перейти к делению по объёму</button>
+              <h3 data-i18n="warnTitle">Глав в книге не найдено</h3>
+              <p data-i18n="warnText">Книга свёрстана единым потоком текста, без разделов-section. Её можно разрезать на равные части по объёму или сохранить целиком.</p>
+              <button id="toSize" data-i18n="toSizeBtn">→ Перейти к делению по объёму</button>
             </div>
           </div>
 
           <div class="panel" id="pSize">
-            <label class="parts-label" for="partsN">На сколько частей разрезать книгу?</label>
+            <label class="parts-label" for="partsN" data-i18n="partsLabel">На сколько частей разрезать книгу?</label>
             <div class="parts-row">
               <input id="partsN" type="number" min="2" max="999" value="4">
               <div class="chips" id="chips">
@@ -345,6 +413,10 @@ footer .orn{color:var(--gold)}
             <p class="hint" id="partsHint"></p>
           </div>
 
+          <div class="panel" id="pWhole">
+            <p class="whole-note" data-i18n-html="wholeNote">Книга будет сохранена <b>одним файлом</b> — с отредактированными метаданными и обложкой, без разрезания. Удобно, когда нужно просто «перешить» книгу.</p>
+          </div>
+
           <button class="btn-go" id="go" disabled>Расшить книгу</button>
           <div class="prog-wrap" id="progWrap">
             <div class="prog"><i id="progBar"></i></div>
@@ -356,9 +428,8 @@ footer .orn{color:var(--gold)}
       </div>
     </section>
 
-    <!-- ПОЛКА -->
     <section>
-      <h2 class="col-title"><b>№ 2</b> Полка</h2>
+      <h2 class="col-title"><b>№ 2</b> <span data-i18n="shelf">Полка</span></h2>
       <div class="panel-card">
         <div class="empty-shelf" id="emptyShelf">
           <svg viewBox="0 0 150 90" fill="none" aria-hidden="true">
@@ -368,21 +439,22 @@ footer .orn{color:var(--gold)}
             <rect x="84" y="18" width="16" height="56" rx="2" stroke="#a89f8c" stroke-width="2" stroke-dasharray="4 4" transform="rotate(7 92 46)"/>
             <line x1="8" y1="76" x2="142" y2="76" stroke="#c9a35a" stroke-width="2.5" stroke-linecap="round"/>
           </svg>
-          <p>Полка пуста.<br>Расшейте книгу — и здесь появятся готовые файлы.</p>
+          <p data-i18n="shelfEmpty1">Полка пуста.</p>
+          <p data-i18n="shelfEmpty2">Расшейте книгу — и здесь появятся готовые файлы.</p>
         </div>
 
         <div class="hidden" id="shelf">
           <div class="sum">
             <p id="sumText"></p>
-            <div class="fmt-seg" id="fmtSeg" data-fmt="fb2" title="Формат скачивания">
+            <div class="fmt-seg" id="fmtSeg" data-fmt="fb2">
               <button data-f="fb2" class="on">FB2</button>
               <button data-f="txt">TXT</button>
-              <button data-f="both">оба</button>
+              <button data-f="both" data-i18n="both">оба</button>
               <span class="thumb3"></span>
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn-gold" id="zipBtn">⤓ Скачать всё (ZIP)</button>
-              <button class="btn-ghost" id="clearShelf">Очистить</button>
+              <button class="btn-ghost" id="clearShelf" data-i18n="clear">Очистить</button>
             </div>
           </div>
           <ol class="files" id="files"></ol>
@@ -395,24 +467,24 @@ footer .orn{color:var(--gold)}
 
 <footer>
   <div class="wrap">
-    <span><span class="orn">❦</span> Переплётная — FB2 → главы или равные части</span>
-    <span>экспорт в FB2 и TXT · метаданные редактируются и наследуются частями</span>
+    <span><span class="orn">❦</span> <span data-i18n="footer1">Переплётная — FB2 → главы, равные части или целая книга</span></span>
+    <span data-i18n="footer2">экспорт в FB2 и TXT · метаданные и обложка редактируются</span>
   </div>
 </footer>
 
 <div class="modal-bg hidden" id="modalBg">
-  <div class="modal" role="dialog" aria-modal="true" aria-label="Метаданные файла">
-    <h3>Метаданные файла</h3>
+  <div class="modal" role="dialog" aria-modal="true">
+    <h3 data-i18n="modalTitle">Метаданные файла</h3>
     <p class="sub" id="modalSub"></p>
     <div class="f-grid">
-      <div class="field full"><label for="mTitle">Название книги внутри файла</label><input id="mTitle"></div>
-      <div class="field full"><label for="mFile">Имя файла (без расширения)</label><input id="mFile"></div>
-      <div class="field full"><label for="mAnno">Аннотация (пусто = унаследована от книги)</label><textarea id="mAnno" rows="4"></textarea></div>
+      <div class="field full"><label for="mTitle" data-i18n="mLblTitle">Название книги внутри файла</label><input id="mTitle"></div>
+      <div class="field full"><label for="mFile" data-i18n="mLblFile">Имя файла (без расширения)</label><input id="mFile"></div>
+      <div class="field full"><label for="mAnno" data-i18n="mLblAnno">Аннотация (пусто = унаследована от книги)</label><textarea id="mAnno" rows="4"></textarea></div>
     </div>
     <div class="meta-actions">
-      <button class="btn-small primary" id="mSave">Сохранить</button>
-      <button class="btn-small ghost" id="mInherit">Как у книги</button>
-      <button class="btn-small ghost" id="mCancel">Отмена</button>
+      <button class="btn-small primary" id="mSave" data-i18n="mSave">Сохранить</button>
+      <button class="btn-small ghost" id="mInherit" data-i18n="mInherit">Как у книги</button>
+      <button class="btn-small ghost" id="mCancel" data-i18n="mCancel">Отмена</button>
     </div>
   </div>
 </div>
@@ -426,28 +498,204 @@ const XS=new XMLSerializer();
 const XLINK='http://www.w3.org/1999/xlink';
 const SPINES=['#b6404c','#3e7d76','#b58f45','#7c5470','#5c7248','#8a5a44'];
 
+/* ═══ СЛОВАРИ ═══ */
+const I18N={
+ru:{
+docTitle:'Переплётная — расшивка книг FB2',
+brand:'Переплётная',tag:'расшивочный станок для книг FB2',
+trust:'всё происходит в браузере — файлы никуда не отправляются',
+bench:'Станок',shelf:'Полка',
+dropBig:'Перетащите сюда книгу в FB2',dropSmall:'или нажмите, чтобы выбрать файл · формат FictionBook 2.x',
+stSize:'размер',stChars:'знаков',stCh:'глав',
+metaBtn:'✎ Метаданные',replaceBtn:'↺ Заменить книгу',
+metaTitle:'Метаданные книги',
+metaNote:'Всё, что вы измените здесь, будет вшито в каждый готовый файл — и в FB2, и в TXT.',
+lblTitle:'Название книги',lblAuthor:'Автор(ы)',lblTranslator:'Переводчики',lblGenre:'Жанр(ы)',
+lblKeywords:'Ключевые слова',lblSeq:'Серия',lblSeqNum:'№ в серии',lblLang:'Язык',lblSrcLang:'Язык оригинала',
+lblDate:'Дата',lblAnno:'Аннотация',
+phAuthors:'Имя Фамилия; Имя Фамилия',phGenres:'жанры через запятую',phDate:'например: 2005',
+phAnno:'Краткое описание книги…',
+covLabel:'Обложка',covUpload:'Заменить…',covRemove:'Удалить',covEmpty:'нет',
+covNotImg:'Нужен файл изображения (JPG, PNG…)',
+covUpdated:'Обложка обновлена — применилась к книге и готовым файлам.',
+covRemoved:'Обложка удалена.',
+pubTitle:'Издательские данные',lblPublisher:'Издательство',lblCity:'Город',lblYear:'Год',lblIsbn:'ISBN',
+apply:'Применить',resetOrig:'Восстановить исходные',
+modeChapters:'По главам',modeSize:'На равные части',modeWhole:'Целиком',
+wholeNote:'Книга будет сохранена <b>одним файлом</b> — с отредактированными метаданными и обложкой, без разрезания. Удобно, когда нужно просто «перешить» книгу.',
+chFound:'Найдено глав: {n}',chTip:'✎ нажмите на название главы, чтобы переименовать её',
+warnTitle:'Глав в книге не найдено',
+warnText:'Книга свёрстана единым потоком текста, без разделов-section. Её можно разрезать на равные части по объёму или сохранить целиком.',
+toSizeBtn:'→ Перейти к делению по объёму',
+partsLabel:'На сколько частей разрезать книгу?',
+hintPer:'≈ {n} знаков на часть — части будут почти равными.',
+hintFew:'⚠ В книге всего {n} блоков текста — частей получится меньше.',
+goNoCh:'Глав нет — переключите режим',busy:'Расшиваю…',
+goWhole:'Сохранить книгу целиком',
+stPartsFew:'Частей получилось {n} — в книге меньше блоков текста.',
+stDone:'Готово — файлы на полке справа.',
+stTitles:'Названия обновлены — готовые файлы пересоберутся при скачивании.',
+stRebuild:'Пересобираю готовые файлы с новыми метаданными…',
+stApplied:'Метаданные применены — в том числе к {n} готовым файлам.',
+stMetaUpd:'Метаданные обновлены.',
+stRestored:'Исходные метаданные восстановлены.',stRestoredFiles:' Файлы пересоберутся при скачивании.',
+stFileUpd:'Файл обновлён.',stFileInh:'Файлу возвращены метаданные книги.',
+stZipDone:'ZIP собран и скачивается.',
+toastNotFb2:'Нужен файл в формате FB2 (.fb2)',
+toastNoCh:'Глав в книге не найдено — доступно деление по объёму и сохранение целиком.',
+errXml:'XML повреждён — файл не читается как FB2.',
+errNotFb2:'Это не похоже на файл FictionBook.',
+errNoBody:'В файле нет текста (нет ни одного body).',
+errNoText:'В книге не найдено текста.',
+splitFailed:'Не удалось обработать книгу: {e}',zipFailed:'Не удалось собрать ZIP: {e}',
+shelfEmpty1:'Полка пуста.',shelfEmpty2:'Расшейте книгу — и здесь появятся готовые файлы.',
+kindCh:'по главам',kindParts:'равные части',kindWhole:'целиком',
+zipBtn:'Скачать всё (ZIP)',zipBusy:'Собираю ZIP…',clear:'Очистить',both:'оба',
+charsShort:'зн.',tuned:'изменено',
+edTitle:'Изменить метаданные и имя файла',dlTitle:'Скачать (формат выбран на полке)',
+modalTitle:'Метаданные файла',
+mLblTitle:'Название книги внутри файла',mLblFile:'Имя файла (без расширения)',
+mLblAnno:'Аннотация (пусто = унаследована от книги)',
+mSave:'Сохранить',mInherit:'Как у книги',mCancel:'Отмена',
+annoNone:'У книги сейчас нет аннотации.',annoInh:'Унаследована от книги: «{s}»',
+footer1:'Переплётная — FB2 → главы, равные части или целая книга',
+footer2:'экспорт в FB2 и TXT · метаданные и обложка редактируются',
+authorNone:'автор не указан',authorNoneBig:'Автор не указан',
+chapterFallback:'Глава {n}',untitled:'без названия',partTitle:'Часть {k} из {total}',
+zipTailCh:'по главам',zipTailParts:'на {n} {w}',zipTailWhole:'целиком',
+sumReady:'Готово: {n} {w} · {size} · {kind}',
+goCh:'Расшить на {n} {w}',goParts:'Разрезать на {n} {w}',
+files:['файл','файла','файлов'],chapters:['главу','главы','глав'],parts:['часть','части','частей']
+},
+en:{
+docTitle:'The Bindery — FB2 book splitter',
+brand:'The Bindery',tag:'an unbinding bench for FB2 books',
+trust:'everything runs in your browser — files never leave your device',
+bench:'The Bench',shelf:'The Shelf',
+dropBig:'Drop an FB2 book here',dropSmall:'or click to choose a file · FictionBook 2.x format',
+stSize:'size',stChars:'characters',stCh:'chapters',
+metaBtn:'✎ Metadata',replaceBtn:'↺ Replace book',
+metaTitle:'Book metadata',
+metaNote:'Everything you change here will be stitched into every output file — both FB2 and TXT.',
+lblTitle:'Book title',lblAuthor:'Author(s)',lblTranslator:'Translators',lblGenre:'Genre(s)',
+lblKeywords:'Keywords',lblSeq:'Series',lblSeqNum:'# in series',lblLang:'Language',lblSrcLang:'Source language',
+lblDate:'Date',lblAnno:'Annotation',
+phAuthors:'First Last; First Last',phGenres:'comma-separated genres',phDate:'e.g. 2005',
+phAnno:'A short description of the book…',
+covLabel:'Cover',covUpload:'Replace…',covRemove:'Remove',covEmpty:'none',
+covNotImg:'Please choose an image file (JPG, PNG…)',
+covUpdated:'Cover updated — applied to the book and output files.',
+covRemoved:'Cover removed.',
+pubTitle:'Publishing details',lblPublisher:'Publisher',lblCity:'City',lblYear:'Year',lblIsbn:'ISBN',
+apply:'Apply',resetOrig:'Restore original',
+modeChapters:'By chapters',modeSize:'Into equal parts',modeWhole:'Whole book',
+wholeNote:'The book will be saved as a <b>single file</b> — with your edited metadata and cover, without splitting. Perfect when you just want to re-dress a book.',
+chFound:'Chapters found: {n}',chTip:'✎ click a chapter title to rename it',
+warnTitle:'No chapters found in this book',
+warnText:'The book is laid out as one continuous flow of text, without section breaks. You can cut it into equal parts by volume or save it whole.',
+toSizeBtn:'→ Switch to volume splitting',
+partsLabel:'How many parts should the book be cut into?',
+hintPer:'≈ {n} characters per part — the parts will be nearly equal.',
+hintFew:'⚠ The book only has {n} text blocks — you\u2019ll get fewer parts.',
+goNoCh:'No chapters — switch the mode',busy:'Splitting…',
+goWhole:'Save the whole book',
+stPartsFew:'Only {n} parts were made — the book has fewer text blocks.',
+stDone:'Done — the files are on the shelf.',
+stTitles:'Titles updated — output files will be rebuilt on download.',
+stRebuild:'Rebuilding output files with the new metadata…',
+stApplied:'Metadata applied — including to {n} output files.',
+stMetaUpd:'Metadata updated.',
+stRestored:'Original metadata restored.',stRestoredFiles:' Files will be rebuilt on download.',
+stFileUpd:'File updated.',stFileInh:'File reverted to the book\u2019s metadata.',
+stZipDone:'ZIP is ready and downloading.',
+toastNotFb2:'Please provide an FB2 file (.fb2)',
+toastNoCh:'No chapters found — volume splitting and whole-book save are available.',
+errXml:'The XML is broken — the file can\u2019t be read as FB2.',
+errNotFb2:'This doesn\u2019t look like a FictionBook file.',
+errNoBody:'The file has no text (no body element).',
+errNoText:'No text found in the book.',
+splitFailed:'Failed to process the book: {e}',zipFailed:'Failed to build the ZIP: {e}',
+shelfEmpty1:'The shelf is empty.',shelfEmpty2:'Split a book — the finished files will appear here.',
+kindCh:'by chapters',kindParts:'equal parts',kindWhole:'whole book',
+zipBtn:'Download all (ZIP)',zipBusy:'Packing ZIP…',clear:'Clear',both:'both',
+charsShort:'chars',tuned:'edited',
+edTitle:'Edit metadata & file name',dlTitle:'Download (format is chosen on the shelf)',
+modalTitle:'File metadata',
+mLblTitle:'Book title inside the file',mLblFile:'File name (without extension)',
+mLblAnno:'Annotation (empty = inherited from the book)',
+mSave:'Save',mInherit:'Match the book',mCancel:'Cancel',
+annoNone:'The book has no annotation right now.',annoInh:'Inherited from the book: “{s}”',
+footer1:'The Bindery — FB2 → chapters, equal parts or the whole book',
+footer2:'export to FB2 & TXT · metadata and cover are editable',
+authorNone:'author unknown',authorNoneBig:'Author unknown',
+chapterFallback:'Chapter {n}',untitled:'untitled',partTitle:'Part {k} of {total}',
+zipTailCh:'by chapters',zipTailParts:'into {n} {w}',zipTailWhole:'whole book',
+sumReady:'Ready: {n} {w} · {size} · {kind}',
+goCh:'Split into {n} {w}',goParts:'Cut into {n} {w}',
+files:['file','files'],chapters:['chapter','chapters'],parts:['part','parts']
+}};
+
+let lang='ru';
+const L=()=>I18N[lang];
+function pluralIdx(n){n=Math.abs(n)%100;
+  if(lang==='ru'){const d=n%10;if(n>10&&n<20)return 2;if(d>1&&d<5)return 1;if(d===1)return 0;return 2;}
+  return n===1?0:1;}
+function t(k,v){let s=L()[k]??I18N.ru[k]??k;if(v)for(const p in v)s=s.split('{'+p+'}').join(v[p]);return s}
+function tp(k,n){return L()[k][pluralIdx(n)]}
+function detectLang(){
+  try{const s=localStorage.getItem('bindery-lang');if(s==='ru'||s==='en')return s}catch(e){}
+  const nav=(navigator.languages&&navigator.languages[0])||navigator.language||'';
+  return nav.toLowerCase().startsWith('ru')?'ru':'en';
+}
+function applyStatic(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=t(el.dataset.i18n));
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>el.placeholder=t(el.dataset.i18nPh));
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>el.innerHTML=t(el.dataset.i18nHtml));
+}
+
 let book=null, mode='chapters', fmt='fb2', results=[], lastMode='', lastN=0, busy=false, editIdx=-1;
 
-/* ── утилиты ── */
 const byNS=(root,name)=>[...root.getElementsByTagNameNS('*',name)];
 const kids=(el,name)=>[...el.children].filter(c=>c.localName===name);
 const firstChild=(el,name)=>[...el.children].find(c=>c.localName===name);
-const fmtBytes=n=>{if(n<1024)return n+' Б';const u=['КБ','МБ','ГБ'];let i=-1;do{n/=1024;i++}while(n>=1024&&i<u.length-1);return n.toFixed(n<10?1:0).replace('.',',')+' '+u[i]};
-const fmtNum=n=>n.toLocaleString('ru-RU');
-const plural=(n,a,b,c)=>{n=Math.abs(n)%100;const d=n%10;if(n>10&&n<20)return c;if(d>1&&d<5)return b;if(d===1)return a;return c};
-const cleanName=s=>s.replace(/[\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').trim().slice(0,60)||'без названия';
+const fmtBytes=n=>{if(n<1024)return n+' '+(lang==='ru'?'Б':'B');const u=lang==='ru'?['КБ','МБ','ГБ']:['KB','MB','GB'];let i=-1;do{n/=1024;i++}while(n>=1024&&i<u.length-1);
+  const s=n.toFixed(n<10?1:0);return (lang==='ru'?s.replace('.',','):s)+' '+u[i]};
+const fmtNum=n=>n.toLocaleString(lang==='ru'?'ru-RU':'en-US');
+const cleanName=s=>s.replace(/[\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').trim().slice(0,60)||t('untitled');
 const tick=()=>new Promise(r=>setTimeout(r,0));
 const chTitle=ch=>ch.customTitle??ch.origTitle;
-function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),4200)}
-function countUp(el,end,fmtF=v=>fmtNum(v)){const t0=performance.now(),dur=800;
-  (function f(t){const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=fmtF(Math.round(end*e));if(p<1)requestAnimationFrame(f)})(t0)}
+const chDisplay=(ch,i)=>chTitle(ch)||t('chapterFallback',{n:i+1});
+function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._h);el._h=setTimeout(()=>el.classList.remove('show'),4200)}
+function countUp(el,end,f=v=>fmtNum(v)){const t0=performance.now(),dur=800;
+  (function fn(tm){const p=Math.min(1,(tm-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=f(Math.round(end*e));if(p<1)requestAnimationFrame(fn)})(t0)}
 function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
 function invalidateResults(){results.forEach(r=>{r.xml=null;r.txt=null})}
 
-/* ── загрузка книги ── */
+/* ═══ язык ═══ */
+function setLang(l,persist=true){
+  lang=l;document.documentElement.lang=l;
+  if(persist){try{localStorage.setItem('bindery-lang',l)}catch(e){}}
+  $('langSeg').dataset.l=l;
+  [...$('langSeg').querySelectorAll('button')].forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+  applyStatic();
+  document.title=t('docTitle');
+  if(book){
+    updateBookDisplay();
+    if(book.hasChapters){$('chHead').textContent=t('chFound',{n:book.chapters.length});renderChapterList();}
+    updatePartsHint();updateGo();
+    if(results.length)renderShelfRows();
+    if(!busy)$('zipBtn').textContent='⤓ '+t('zipBtn');
+  }
+}
+$('langSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.l!==lang)setLang(b.dataset.l);
+});
+
+/* ═══ загрузка книги ═══ */
 async function handleFile(file){
   if(!file)return;
-  if(!/\.fb2$/i.test(file.name)&&!/fictionbook/i.test(file.type||'')){toast('Нужен файл в формате FB2 (.fb2)');return}
+  if(!/\.fb2$/i.test(file.name)&&!/fictionbook/i.test(file.type||'')){toast(t('toastNotFb2'));return}
   try{
     const buf=await file.arrayBuffer();
     let enc='utf-8';
@@ -457,19 +705,16 @@ async function handleFile(file){
     let text;try{text=new TextDecoder(enc,{fatal:false}).decode(buf)}catch(e){text=new TextDecoder('utf-8').decode(buf)}
 
     const doc=new DOMParser().parseFromString(text,'application/xml');
-    if(doc.getElementsByTagNameNS('*','parsererror').length)throw new Error('XML повреждён — файл не читается как FB2.');
-    if(!doc.documentElement||doc.documentElement.localName!=='FictionBook')throw new Error('Это не похоже на файл FictionBook.');
+    if(doc.getElementsByTagNameNS('*','parsererror').length)throw new Error(t('errXml'));
+    if(!doc.documentElement||doc.documentElement.localName!=='FictionBook')throw new Error(t('errNotFb2'));
     const fbns=doc.documentElement.namespaceURI||'http://www.gribuser.ru/xml/fictionbook/2.0';
 
     const bodies=byNS(doc,'body').filter(b=>b.parentNode===doc.documentElement);
-    if(!bodies.length)throw new Error('В файле нет текста (нет ни одного <body>).');
+    if(!bodies.length)throw new Error(t('errNoBody'));
     const mainBody=bodies.find(b=>(b.getAttribute('name')||'')!=='notes')||bodies[0];
 
     const bt=byNS(doc,'book-title')[0];
     const title=bt?bt.textContent.trim():file.name.replace(/\.fb2$/i,'');
-    const author=byNS(doc,'author').map(a=>['first-name','middle-name','last-name']
-      .map(t=>{const e=a.getElementsByTagNameNS('*',t)[0];return e?e.textContent.trim():''}).join(' ').trim())
-      .filter(Boolean).join(', ');
 
     let secs=kids(mainBody,'section');
     if(secs.length===1&&kids(secs[0],'section').length>=2)secs=kids(secs[0],'section');
@@ -482,19 +727,16 @@ async function handleFile(file){
       if(BLOCK.has(c.localName.toLowerCase()))blocks.push({node:c,size:c.textContent.length});
       else walk(c);}})(mainBody);
     const totalChars=blocks.reduce((s,b)=>s+b.size,0);
-    if(!totalChars)throw new Error('В книге не найдено текста.');
+    if(!totalChars)throw new Error(t('errNoText'));
 
     const binaries=new Map();
     byNS(doc,'binary').forEach(b=>{const id=b.getAttribute('id');if(id)binaries.set(id,b)});
-    const extraBodies=bodies.filter(b=>b!==mainBody).map(b=>({
-      name:b.getAttribute('name')||'',
-      sections:kids(b,'section').map(s=>({node:s,ids:collectIds(s)}))
-    }));
     const descrOrig=byNS(doc,'description')[0]||null;
     const descrNode=descrOrig?descrOrig.cloneNode(true):doc.createElementNS(fbns,'description');
 
-    book={doc,fbns,file,title,author,mainBody,chapters,hasChapters,blocks,totalChars,binaries,extraBodies,
+    book={doc,fbns,file,title,mainBody,chapters,hasChapters,blocks,totalChars,binaries,
       descrOriginal:descrOrig,descrNode,descrIds:collectHrefs([descrNode])};
+    book.author=readMeta(book.descrNode).author;
     renderBook();
   }catch(err){
     toast(err.message);book=null;
@@ -502,14 +744,14 @@ async function handleFile(file){
     $('metaPanel').classList.add('hidden');$('drop').classList.remove('hidden');
   }
 }
-function chapterTitle(sec){const t=kids(sec,'title')[0];return t?t.textContent.replace(/\s+/g,' ').trim():''}
+function chapterTitle(sec){const ti=kids(sec,'title')[0];return ti?ti.textContent.replace(/\s+/g,' ').trim():''}
 function collectIds(el){const ids=el.getAttribute('id')?[el.getAttribute('id')]:[];
   el.querySelectorAll('[id]').forEach(n=>ids.push(n.getAttribute('id')));return ids}
 function collectHrefs(nodes){const s=new Set();
   for(const root of nodes){const scan=el=>{for(const a of el.attributes)if(a.localName==='href'&&a.value.startsWith('#'))s.add(a.value.slice(1))};
     scan(root);root.querySelectorAll('*').forEach(scan)}return s}
 
-/* ── отображение книги ── */
+/* ═══ отображение книги ═══ */
 function renderBook(){
   $('drop').classList.add('hidden');
   $('bookcard').classList.remove('hidden');
@@ -517,43 +759,43 @@ function renderBook(){
   updateBookDisplay();
   countUp($('stSize'),book.file.size,fmtBytes);
   countUp($('stChars'),book.totalChars);
-  $('stCh').textContent=book.hasChapters?book.chapters.length:'нет';
+  $('stCh').textContent=book.hasChapters?book.chapters.length:'—';
   $('metaPanel').classList.add('hidden');
   $('resetMeta').disabled=!book.descrOriginal;
+  updateCoverUI();
 
   if(book.hasChapters){
     $('chFound').classList.remove('hidden');$('chNone').classList.add('hidden');
-    $('chCount').textContent=book.chapters.length;
+    $('chHead').textContent=t('chFound',{n:book.chapters.length});
     renderChapterList();
     setMode('chapters');
   }else{
     $('chFound').classList.add('hidden');$('chNone').classList.remove('hidden');
     setMode('size');
-    toast('Глав в книге не найдено — доступно деление по объёму.');
+    toast(t('toastNoCh'));
   }
   updatePartsHint();updateGo();resetShelf();
 }
 function updateBookDisplay(){
   $('cvTitle').textContent=book.title;
-  $('cvAuthor').textContent=book.author||'автор не указан';
+  $('cvAuthor').textContent=book.author||t('authorNone');
   $('bkTitle').textContent=book.title;
-  $('bkAuthor').textContent=book.author||'Автор не указан';
+  $('bkAuthor').textContent=book.author||t('authorNoneBig');
 }
 function renderChapterList(){
   $('chList').innerHTML=book.chapters.map((c,i)=>
     '<li class="'+(c.customTitle?'edited':'')+'" style="animation:rise .4s '+Math.min(i*0.03,.6)+'s both">'+
     '<span class="ch-i">'+String(i+1).padStart(2,'0')+'</span>'+
-    '<span class="ch-t" data-i="'+i+'" title="Нажмите, чтобы переименовать"></span>'+
-    '<span class="ch-s">≈ '+fmtNum(c.chars)+' зн.</span></li>').join('');
-  $('chList').querySelectorAll('.ch-t').forEach(s=>s.textContent=chTitle(book.chapters[+s.dataset.i])||'Глава без названия');
+    '<span class="ch-t" data-i="'+i+'"></span>'+
+    '<span class="ch-s">≈ '+fmtNum(c.chars)+' '+t('charsShort')+'</span></li>').join('');
+  $('chList').querySelectorAll('.ch-t').forEach(s=>s.textContent=chDisplay(book.chapters[+s.dataset.i],+s.dataset.i));
 }
-
 $('chList').addEventListener('click',e=>{
-  const t=e.target.closest('.ch-t');if(!t)return;
-  const idx=+t.dataset.i, ch=book.chapters[idx];
+  const el=e.target.closest('.ch-t');if(!el)return;
+  const idx=+el.dataset.i, ch=book.chapters[idx];
   const inp=document.createElement('input');
   inp.className='ch-edit';inp.value=chTitle(ch);inp.maxLength=120;
-  t.replaceWith(inp);inp.focus();inp.select();
+  el.replaceWith(inp);inp.focus();inp.select();
   let done=false;
   const commit=ok=>{if(done)return;done=true;
     if(ok){const v=inp.value.trim();ch.customTitle=(v&&v!==ch.origTitle)?v:null;}
@@ -564,67 +806,201 @@ $('chList').addEventListener('click',e=>{
 });
 function afterChapterEdit(){
   if(!results.length)return;
-  invalidateResults();
-  renderShelfRows();
-  $('status').textContent='Названия обновлены — готовые файлы пересоберутся при скачивании.';
+  invalidateResults();renderShelfRows();
+  $('status').textContent=t('stTitles');
 }
 
-/* ── метаданные книги ── */
-$('metaBtn').onclick=()=>{const p=$('metaPanel');
-  if(p.classList.contains('hidden')){fillMetaForm();p.classList.remove('hidden')}else p.classList.add('hidden')};
-$('metaClose').onclick=()=>$('metaPanel').classList.add('hidden');
-
+/* ═══ чтение/запись метаданных ═══ */
 function makeEl(name){return book.doc.createElementNS(book.fbns,name)}
 function ensureIn(parent,name){let e=firstChild(parent,name);if(!e){e=makeEl(name);parent.appendChild(e)}return e}
+function setOrRemove(parent,name,val){
+  let e=firstChild(parent,name);
+  if(val){if(!e){e=makeEl(name);parent.appendChild(e)}e.textContent=val}
+  else if(e)e.remove();
+}
+function insertInto(ti,el,afterNames){
+  for(const n of afterNames){const ref=firstChild(ti,n);
+    if(ref){if(ref.nextSibling)ti.insertBefore(el,ref.nextSibling);else ti.appendChild(el);return;}}
+  ti.appendChild(el);
+}
+function personText(a){return ['first-name','middle-name','last-name']
+  .map(x=>{const e=firstChild(a,x);return e?e.textContent.trim():''}).join(' ').trim()}
+function readMeta(d){
+  const ti=firstChild(d,'title-info');
+  const get=n=>{const e=ti&&firstChild(ti,n);return e?e.textContent.trim():''};
+  const seq=ti&&firstChild(ti,'sequence');
+  const pi=firstChild(d,'publish-info');
+  const pget=n=>{const e=pi&&firstChild(pi,n);return e?e.textContent.trim():''};
+  const annoEl=ti&&firstChild(ti,'annotation');
+  return{
+    title:(()=>{const e=ti&&firstChild(ti,'book-title');return e?e.textContent.trim():''})(),
+    authors:ti?kids(ti,'author').map(personText).filter(Boolean).join('; '):'',
+    author:ti?kids(ti,'author').map(personText).filter(Boolean).join(', '):'',
+    translators:ti?kids(ti,'translator').map(personText).filter(Boolean).join('; '):'',
+    genres:ti?kids(ti,'genre').map(g=>g.textContent.trim()).filter(Boolean).join(', '):'',
+    keywords:get('keywords'),lang:get('lang'),srcLang:get('src-lang'),date:get('date'),
+    seqName:seq?seq.getAttribute('name')||'':'',seqNum:seq?seq.getAttribute('number')||'':'',
+    anno:annoEl?(kids(annoEl,'p').map(p=>p.textContent.trim()).filter(Boolean).join('\n')||annoEl.textContent.trim()):'',
+    publisher:pget('publisher'),city:pget('city'),year:pget('year'),isbn:pget('isbn')
+  };
+}
+function personEl(str,tag){
+  const a=makeEl(tag);
+  const ws=str.trim().split(/\s+/).filter(Boolean);
+  if(!ws.length)return null;
+  const mk=(n,txt)=>{const e=makeEl(n);e.textContent=txt;a.appendChild(e)};
+  if(ws.length===1)mk('first-name',ws[0]);
+  else if(ws.length===2){mk('first-name',ws[0]);mk('last-name',ws[1]);}
+  else{mk('first-name',ws[0]);mk('middle-name',ws.slice(1,-1).join(' '));mk('last-name',ws[ws.length-1]);}
+  return a;
+}
 function setAnnotationNode(ti,text){
   kids(ti,'annotation').forEach(a=>a.remove());
   if(!text)return;
   const an=makeEl('annotation');
   text.split(/\n+/).forEach(pt=>{const pe=makeEl('p');pe.textContent=pt.trim();if(pe.textContent)an.appendChild(pe)});
   if(!an.children.length)return;
-  const ref=firstChild(ti,'lang')||firstChild(ti,'book-title');
-  if(ref&&ref.nextSibling)ti.insertBefore(an,ref.nextSibling);else ti.appendChild(an);
+  insertInto(ti,an,['translator','src-lang','lang','book-title']);
 }
-function readMeta(d){
-  const ti=firstChild(d,'title-info');
-  const bt=ti&&firstChild(ti,'book-title');
-  const author=kids(ti||d,'author').map(a=>['first-name','middle-name','last-name']
-    .map(t=>{const e=firstChild(a,t);return e?e.textContent.trim():''}).join(' ').trim()).filter(Boolean).join(', ');
-  const g=ti&&firstChild(ti,'genre'), l=ti&&firstChild(ti,'lang'), an=ti&&firstChild(ti,'annotation');
-  return{
-    title:bt?bt.textContent.trim():'',
-    author,
-    genre:g?g.textContent.trim():'',
-    lang:l?l.textContent.trim():'',
-    anno:an?kids(an,'p').map(p=>p.textContent.trim()).filter(Boolean).join('\n'):(an?an.textContent.trim():'')
-  };
+
+/* ═══ обложка ═══ */
+function getCoverId(){
+  const ti=firstChild(book.descrNode,'title-info');if(!ti)return null;
+  const cp=firstChild(ti,'coverpage');if(!cp)return null;
+  const img=[...cp.children].find(c=>c.localName==='image');if(!img)return null;
+  for(const a of img.attributes)if(a.localName==='href'&&a.value.startsWith('#'))return a.value.slice(1);
+  return null;
 }
-function fillMetaForm(){const m=readMeta(book.descrNode);
-  $('fTitle').value=m.title;$('fAuthor').value=m.author;$('fGenre').value=m.genre;
-  $('fLang').value=m.lang;$('fAnno').value=m.anno;}
+function coverDataURL(){
+  const id=getCoverId();if(!id)return null;
+  const b=book.binaries.get(id);if(!b)return null;
+  return 'data:'+(b.getAttribute('content-type')||'image/jpeg')+';base64,'+b.textContent.replace(/\s+/g,'');
+}
+function updateCoverUI(){
+  const url=coverDataURL();
+  const cv=$('cvImg'),th=$('covThumb'),ph=$('covPh');
+  cv.classList.toggle('hidden',!url);if(url)cv.src=url;
+  $('coverBox').classList.toggle('has-img',!!url);
+  th.classList.toggle('hidden',!url);ph.classList.toggle('hidden',!!url);
+  if(url)th.src=url;
+  $('covRemoveBtn').disabled=!url;
+}
+function removeBinaryIfUnreferenced(id){
+  const token='#'+id;let used=false;
+  const scan=el=>{for(const a of el.attributes)if(a.localName==='href'&&a.value===token)used=true};
+  for(const el of book.doc.documentElement.querySelectorAll('*')){
+    if(el.localName==='binary'&&el.getAttribute('id')===id)continue;
+    scan(el);if(used)break;
+  }
+  if(used)return;
+  const b=book.binaries.get(id);
+  if(b&&b.parentNode)b.parentNode.removeChild(b);
+  book.binaries.delete(id);
+}
+function setCover(base64,type,ext){
+  const oldId=getCoverId();
+  const id='cover_'+Date.now().toString(36)+'.'+ext;
+  const b=makeEl('binary');
+  b.setAttribute('id',id);
+  b.setAttribute('content-type',type||'image/jpeg');
+  b.textContent=base64;
+  book.doc.documentElement.appendChild(b);
+  book.binaries.set(id,b);
+
+  const ti=ensureIn(book.descrNode,'title-info');
+  let cp=firstChild(ti,'coverpage');
+  if(!cp){cp=makeEl('coverpage');insertInto(ti,cp,['date','translator','src-lang','lang','book-title']);}
+  let img=[...cp.children].find(c=>c.localName==='image');
+  if(!img){while(cp.firstChild)cp.removeChild(cp.firstChild);img=makeEl('image');cp.appendChild(img);}
+  img.setAttributeNS(XLINK,'l:href','#'+id);
+
+  if(oldId&&oldId!==id)removeBinaryIfUnreferenced(oldId);
+  book.descrIds=collectHrefs([book.descrNode]);
+  invalidateResults();
+  updateCoverUI();
+  if(results.length)renderShelfRows();
+  $('status').textContent=t('covUpdated');
+}
+$('covUploadBtn').onclick=()=>$('covFile').click();
+$('covFile').addEventListener('change',async e=>{
+  const f=e.target.files[0];e.target.value='';
+  if(!f)return;
+  if(!f.type.startsWith('image/')){toast(t('covNotImg'));return}
+  const dataUrl=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)});
+  const ext=f.type==='image/png'?'png':(f.type==='image/gif'?'gif':'jpg');
+  setCover(dataUrl.split(',')[1],f.type,ext);
+});
+$('covRemoveBtn').onclick=()=>{
+  const ti=firstChild(book.descrNode,'title-info');
+  const cp=ti&&firstChild(ti,'coverpage');
+  const oldId=getCoverId();
+  if(cp)cp.remove();
+  if(oldId)removeBinaryIfUnreferenced(oldId);
+  book.descrIds=collectHrefs([book.descrNode]);
+  invalidateResults();updateCoverUI();
+  if(results.length)renderShelfRows();
+  $('status').textContent=t('covRemoved');
+};
+
+/* ═══ применение метаданных ═══ */
+function fillMetaForm(){
+  const m=readMeta(book.descrNode);
+  $('fTitle').value=m.title;$('fAuthor').value=m.authors;$('fTrans').value=m.translators;
+  $('fGenre').value=m.genres;$('fKeys').value=m.keywords;
+  $('fSeq').value=m.seqName;$('fSeqN').value=m.seqNum;
+  $('fLang').value=m.lang;$('fSrcLang').value=m.srcLang;$('fDate').value=m.date;
+  $('fAnno').value=m.anno;
+  $('fPub').value=m.publisher;$('fCity').value=m.city;$('fYear').value=m.year;$('fIsbn').value=m.isbn;
+  updateCoverUI();
+}
+$('metaBtn').onclick=()=>{const p=$('metaPanel');
+  if(p.classList.contains('hidden')){fillMetaForm();p.classList.remove('hidden')}else p.classList.add('hidden')};
+$('metaClose').onclick=()=>$('metaPanel').classList.add('hidden');
 
 $('applyMeta').onclick=async()=>{
   const d=book.descrNode;
   const ti=ensureIn(d,'title-info');
-  const bt=ensureIn(ti,'book-title');
-  bt.textContent=$('fTitle').value.trim()||book.title||'Без названия';
 
-  kids(ti,'author').forEach(a=>a.remove());
-  const nm=$('fAuthor').value.trim();
-  if(nm){const a=makeEl('author');const ws=nm.split(/\s+/);
-    const fn=makeEl('first-name');fn.textContent=ws[0];a.appendChild(fn);
-    if(ws.length>1){const ln=makeEl('last-name');ln.textContent=ws.slice(1).join(' ');a.appendChild(ln);}
-    ti.insertBefore(a,bt);}
+  const bt=ensureIn(ti,'book-title');
+  bt.textContent=$('fTitle').value.trim()||book.title||'—';
 
   kids(ti,'genre').forEach(g=>g.remove());
-  const gv=$('fGenre').value.trim();
-  if(gv){const g=makeEl('genre');g.textContent=gv;ti.insertBefore(g,ti.firstChild);}
+  const genres=$('fGenre').value.split(',').map(s=>s.trim()).filter(Boolean);
+  let gAnchor=ti.firstChild;
+  for(const gv of genres){const g=makeEl('genre');g.textContent=gv;ti.insertBefore(g,gAnchor);}
 
-  let lg=firstChild(ti,'lang');const lv=$('fLang').value.trim();
-  if(lv){if(!lg){lg=makeEl('lang');ti.insertBefore(lg,bt.nextSibling)}lg.textContent=lv}
-  else if(lg)lg.remove();
+  kids(ti,'author').forEach(a=>a.remove());
+  const authors=$('fAuthor').value.split(';').map(s=>s.trim()).filter(Boolean);
+  for(const av of authors){const el=personEl(av,'author');if(el)ti.insertBefore(el,bt);}
+
+  setOrRemove(ti,'keywords',$('fKeys').value.trim());
+  setOrRemove(ti,'lang',$('fLang').value.trim());
+  setOrRemove(ti,'src-lang',$('fSrcLang').value.trim());
+
+  kids(ti,'translator').forEach(x=>x.remove());
+  const trans=$('fTrans').value.split(';').map(s=>s.trim()).filter(Boolean);
+  let tRef=firstChild(ti,'src-lang')||firstChild(ti,'lang')||bt;
+  for(const tv of trans){const el=personEl(tv,'translator');
+    if(el){if(tRef.nextSibling)ti.insertBefore(el,tRef.nextSibling);else ti.appendChild(el);tRef=el;}}
 
   setAnnotationNode(ti,$('fAnno').value.trim());
+  setOrRemove(ti,'date',$('fDate').value.trim());
+
+  kids(ti,'sequence').forEach(s=>s.remove());
+  const sqn=$('fSeq').value.trim(),sqNum=$('fSeqN').value.trim();
+  if(sqn){const s=makeEl('sequence');s.setAttribute('name',sqn);
+    if(sqNum)s.setAttribute('number',sqNum);
+    insertInto(ti,s,['coverpage','date','annotation','translator','src-lang','lang','book-title']);}
+
+  const pub={publisher:$('fPub').value.trim(),city:$('fCity').value.trim(),year:$('fYear').value.trim(),isbn:$('fIsbn').value.trim()};
+  let pi=firstChild(d,'publish-info');
+  if(Object.values(pub).some(Boolean)){
+    pi=ensureIn(d,'publish-info');
+    for(const[k,v]of Object.entries(pub))setOrRemove(pi,k,v);
+  }else if(pi){
+    ['publisher','city','year','isbn'].forEach(k=>{const e=firstChild(pi,k);if(e)e.remove()});
+    if(!pi.children.length)pi.remove();
+  }
 
   book.descrIds=collectHrefs([d]);
   book.title=bt.textContent.trim();
@@ -633,34 +1009,36 @@ $('applyMeta').onclick=async()=>{
 
   invalidateResults();
   if(results.length){
-    $('status').textContent='Пересобираю готовые файлы с новыми метаданными…';
+    $('status').textContent=t('stRebuild');
     for(let i=0;i<results.length;i++){buildResultXml(results[i]);if(i%2===0)await tick();}
     renderShelfRows();
-    $('status').textContent='Метаданные применены — в том числе к '+results.length+' готовым файлам.';
+    $('status').textContent=t('stApplied',{n:results.length});
   }else{
-    $('status').textContent='Метаданные обновлены.';
+    $('status').textContent=t('stMetaUpd');
   }
 };
 $('resetMeta').onclick=()=>{
   if(!book.descrOriginal)return;
   book.descrNode=book.descrOriginal.cloneNode(true);
   book.descrIds=collectHrefs([book.descrNode]);
-  fillMetaForm();
-  invalidateResults();
-  $('status').textContent='Исходные метаданные восстановлены.'+(results.length?' Файлы пересоберутся при скачивании.':'');
+  book.author=readMeta(book.descrNode).author;
+  fillMetaForm();updateBookDisplay();invalidateResults();
+  $('status').textContent=t('stRestored')+(results.length?t('stRestoredFiles'):'');
 };
 
-/* ── режимы ── */
+/* ═══ режимы ═══ */
+const PANELS={chapters:'pCh',size:'pSize',whole:'pWhole'};
 function setMode(m){
   mode=m;$('seg').dataset.mode=m;
   $('mCh').classList.toggle('on',m==='chapters');
   $('mSize').classList.toggle('on',m==='size');
-  $('pCh').classList.toggle('on',m==='chapters');
-  $('pSize').classList.toggle('on',m==='size');
+  $('mWhole').classList.toggle('on',m==='whole');
+  for(const[k,id]of Object.entries(PANELS))$(id).classList.toggle('on',k===m);
   updateGo();
 }
 $('mCh').onclick=()=>setMode('chapters');
 $('mSize').onclick=()=>setMode('size');
+$('mWhole').onclick=()=>setMode('whole');
 $('toSize').onclick=()=>setMode('size');
 $('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;
   $('partsN').value=b.dataset.n;refreshChips();updatePartsHint();updateGo()});
@@ -668,47 +1046,49 @@ $('partsN').addEventListener('input',()=>{refreshChips();updatePartsHint();updat
 function refreshChips(){[...$('chips').children].forEach(c=>c.classList.toggle('on',c.dataset.n===$('partsN').value))}
 function getN(){let n=parseInt($('partsN').value,10);if(isNaN(n))n=2;return Math.min(999,Math.max(2,n))}
 function updatePartsHint(){
-  if(!book){$('partsHint').textContent='';return}
-  const n=getN(),per=Math.round(book.totalChars/n),h=$('partsHint');
-  if(n>book.blocks.length){h.textContent='⚠ В книге всего '+fmtNum(book.blocks.length)+' блоков текста — частей получится меньше.';h.classList.add('gold')}
-  else{h.textContent='≈ '+fmtNum(per)+' знаков на часть — части будут почти равными.';h.classList.remove('gold')}
+  const h=$('partsHint');
+  if(!book){h.textContent='';return}
+  const n=getN(),per=Math.round(book.totalChars/n);
+  if(n>book.blocks.length){h.textContent=t('hintFew',{n:fmtNum(book.blocks.length)});h.classList.add('gold')}
+  else{h.textContent=t('hintPer',{n:fmtNum(per)});h.classList.remove('gold')}
 }
 function updateGo(){
   const btn=$('go');
   if(!book||busy){btn.disabled=true;return}
   if(mode==='chapters'){
     btn.disabled=!book.hasChapters;
-    btn.textContent=book.hasChapters?('Расшить на '+book.chapters.length+' '+plural(book.chapters.length,'главу','главы','глав')):'Глав нет — переключите режим';
-  }else{
+    btn.textContent=book.hasChapters?t('goCh',{n:book.chapters.length,w:tp('chapters',book.chapters.length)}):t('goNoCh');
+  }else if(mode==='size'){
     const n=getN();btn.disabled=false;
-    btn.textContent='Разрезать на '+n+' '+plural(n,'часть','части','частей');
+    btn.textContent=t('goParts',{n,w:tp('parts',n)});
+  }else{
+    btn.disabled=false;btn.textContent=t('goWhole');
   }
 }
-
-/* формат скачивания */
 $('fmtSeg').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   fmt=b.dataset.f;$('fmtSeg').dataset.fmt=fmt;
   [...$('fmtSeg').querySelectorAll('button')].forEach(x=>x.classList.toggle('on',x===b));
 });
 
-/* ── сборка FB2 ── */
+/* ═══ сборка FB2 ═══ */
 function notesFor(need){
-  return book.extraBodies.map(eb=>{
-    const kept=eb.sections.filter(s=>s.ids.some(id=>need.has(id)));
+  const mainBody=book.mainBody;
+  return byNS(book.doc,'body').filter(b=>b.parentNode===book.doc.documentElement&&b!==mainBody).map(b=>{
+    const kept=kids(b,'section').filter(s=>collectIds(s).some(id=>need.has(id)));
     if(!kept.length)return '';
-    const attr=eb.name?(' name="'+eb.name.replace(/"/g,'&quot;')+'"'):'';
-    return '<body'+attr+'>'+kept.map(s=>XS.serializeToString(s.node)).join('')+'</body>';
+    const attr=(b.getAttribute('name')||'')?(' name="'+b.getAttribute('name').replace(/"/g,'&quot;')+'"'):'';
+    return '<body'+attr+'>'+kept.map(s=>XS.serializeToString(s)).join('')+'</body>';
   }).join('');
 }
 function binariesFor(need){
   return [...need].map(id=>book.binaries.get(id)).filter(Boolean).map(b=>XS.serializeToString(b)).join('');
 }
 function applyChapterTitleToNode(c,title){
-  kids(c,'title').forEach(t=>t.remove());
-  const t=makeEl('title'),p=makeEl('p');
-  p.textContent=title;t.appendChild(p);
-  c.insertBefore(t,c.firstChild);
+  kids(c,'title').forEach(x=>x.remove());
+  const ti=makeEl('title'),p=makeEl('p');
+  p.textContent=title;ti.appendChild(p);
+  c.insertBefore(ti,c.firstChild);
 }
 function currentBookTitle(){
   const ti=firstChild(book.descrNode,'title-info');
@@ -717,32 +1097,43 @@ function currentBookTitle(){
 }
 function buildResultXml(r){
   if(r.xml)return r.xml;
-  let mainBodyXml,need,chars;
-  if(r.kind==='chapter'){
-    const ch=book.chapters[r.idx];
-    const c=ch.node.cloneNode(true);
-    if(ch.customTitle)applyChapterTitleToNode(c,chTitle(ch));
-    mainBodyXml='<body>'+XS.serializeToString(c)+'</body>';
-    need=collectHrefs([c]);chars=ch.chars;
-  }else{
-    const inner=r.blocks.map(b=>XS.serializeToString(b.node)).join('');
-    mainBodyXml='<body><section><title><p>Часть '+r.k+' из '+r.total+'</p></title>'+inner+'</section></body>';
-    need=collectHrefs(r.blocks.map(b=>b.node));chars=r.chars;
-  }
-  need=new Set([...need,...book.descrIds]);
   const d=book.descrNode.cloneNode(true);
   const ti=firstChild(d,'title-info');
   if(ti){
     if(r.customTitle){const bt=ensureIn(ti,'book-title');bt.textContent=r.customTitle;}
     if(r.customAnno!=null)setAnnotationNode(ti,r.customAnno);
   }
+  const descrS=XS.serializeToString(d);
+
+  if(r.kind==='whole'){
+    const root=book.doc.documentElement;
+    const bodiesXml=[...root.children].filter(c=>c.localName==='body').map(b=>XS.serializeToString(b)).join('');
+    const binsXml=[...book.binaries.values()].map(b=>XS.serializeToString(b)).join('');
+    r.xml='<?xml version="1.0" encoding="utf-8"?>\n<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="'+XLINK+'">\n'+
+      descrS+'\n'+bodiesXml+'\n'+binsXml+'\n</FictionBook>';
+    r.size=r.xml.length;return r.xml;
+  }
+
+  let mainBodyXml,need;
+  if(r.kind==='chapter'){
+    const ch=book.chapters[r.idx];
+    const c=ch.node.cloneNode(true);
+    if(ch.customTitle)applyChapterTitleToNode(c,chTitle(ch));
+    mainBodyXml='<body>'+XS.serializeToString(c)+'</body>';
+    need=collectHrefs([c]);
+  }else{
+    const inner=r.blocks.map(b=>XS.serializeToString(b.node)).join('');
+    mainBodyXml='<body><section><title><p>'+t('partTitle',{k:r.k,total:r.total})+'</p></title>'+inner+'</section></body>';
+    need=collectHrefs(r.blocks.map(b=>b.node));
+  }
+  need=new Set([...need,...book.descrIds]);
   r.xml='<?xml version="1.0" encoding="utf-8"?>\n<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="'+XLINK+'">\n'+
-    XS.serializeToString(d)+'\n'+mainBodyXml+'\n'+notesFor(need)+'\n'+binariesFor(need)+'\n</FictionBook>';
+    descrS+'\n'+mainBodyXml+'\n'+notesFor(need)+'\n'+binariesFor(need)+'\n</FictionBook>';
   r.size=r.xml.length;
   return r.xml;
 }
 
-/* ── сборка TXT ── */
+/* ═══ сборка TXT ═══ */
 function extractBlocksFrom(root){
   const out=[];
   const TXT=new Set(['p','subtitle','v','text-author','td']);
@@ -752,19 +1143,19 @@ function extractBlocksFrom(root){
       const tag=c.localName.toLowerCase();
       if(tag==='title'){
         if(!skipped){skipped=true;continue;}
-        kids(c,'p').forEach(p=>{const t=p.textContent.replace(/\s+/g,' ').trim();if(t)out.push({tag:'heading',t});});
+        kids(c,'p').forEach(p=>{const x=p.textContent.replace(/\s+/g,' ').trim();if(x)out.push({tag:'heading',t:x});});
         continue;
       }
       if(TXT.has(tag)){
-        const t=c.textContent.replace(/\s+/g,' ').trim();
-        if(t)out.push({tag,t});
+        const x=c.textContent.replace(/\s+/g,' ').trim();
+        if(x)out.push({tag,t:x});
       } else walkKids(c,false);
     }
   };
   const rtag=root.localName.toLowerCase();
   if(TXT.has(rtag)){
-    const t=root.textContent.replace(/\s+/g,' ').trim();
-    if(t)out.push({tag:rtag,t});
+    const x=root.textContent.replace(/\s+/g,' ').trim();
+    if(x)out.push({tag:rtag,t:x});
   } else walkKids(root, rtag==='section');
   return out;
 }
@@ -780,26 +1171,30 @@ function renderTxtItems(items){
 function buildResultTxt(r){
   if(r.txt)return r.txt;
   const title=r.customTitle??currentBookTitle();
-  const sub=r.kind==='chapter'?chTitle(book.chapters[r.idx]):('Часть '+r.k+' из '+r.total);
+  const sub=r.kind==='chapter'?chDisplay(book.chapters[r.idx],r.idx)
+           :r.kind==='part'?t('partTitle',{k:r.k,total:r.total}):null;
   let head=title+'\n';
   if(book.author)head+=book.author+'\n';
-  head+='\n'+sub.toUpperCase()+'\n';
+  if(sub)head+='\n'+sub.toUpperCase()+'\n';
   const anno=r.customAnno!=null?r.customAnno:readMeta(book.descrNode).anno;
   if(anno)head+='\n'+anno.trim()+'\n';
   let items;
   if(r.kind==='chapter')items=extractBlocksFrom(book.chapters[r.idx].node);
-  else{items=[];for(const b of r.blocks)items=items.concat(extractBlocksFrom(b.node));}
+  else{
+    const src=r.kind==='whole'?book.blocks:r.blocks;
+    items=[];for(const b of src)items=items.concat(extractBlocksFrom(b.node));
+  }
   r.txt=(head+'\n— — —\n\n'+renderTxtItems(items)).replace(/\n{3,}/g,'\n\n').trimEnd()+'\n';
   return r.txt;
 }
 function fb2Blob(xml){return new Blob([xml],{type:'application/x-fictionbook+xml'})}
 function txtBlob(txt){return new Blob(['\uFEFF'+txt],{type:'text/plain;charset=utf-8'})}
 
-/* ── имена ── */
 function baseName(r){
   if(r.customFileName)return r.customFileName;
-  if(r.kind==='chapter')return String(r.idx+1).padStart(2,'0')+' — '+cleanName(chTitle(book.chapters[r.idx]));
-  return String(r.k).padStart(2,'0')+' — Часть '+r.k+' из '+r.total;
+  if(r.kind==='whole')return cleanName(r.customTitle??currentBookTitle());
+  if(r.kind==='chapter')return String(r.idx+1).padStart(2,'0')+' — '+cleanName(chDisplay(book.chapters[r.idx],r.idx));
+  return String(r.k).padStart(2,'0')+' — '+t('partTitle',{k:r.k,total:r.total});
 }
 function resultName(r,ext){return baseName(r)+'.'+ext}
 function downloadResult(r){
@@ -810,22 +1205,23 @@ function downloadResult(r){
   else{doFb2();setTimeout(doTxt,300);}
 }
 
-/* ── разрезание ── */
+/* ═══ обработка ═══ */
+function newResult(extra){return Object.assign({customTitle:null,customAnno:null,customFileName:null,xml:null,txt:null,size:0},extra)}
 async function run(){
   if(!book||busy)return;
   busy=true;results=[];resetShelf();
-  const btn=$('go');btn.disabled=true;btn.textContent='Расшиваю…';
+  const btn=$('go');btn.disabled=true;btn.textContent=t('busy');
   $('progWrap').classList.add('on');
   $('status').textContent='';
   try{
     if(mode==='chapters'){
       lastMode='chapters';const chs=book.chapters;lastN=chs.length;
       for(let i=0;i<chs.length;i++){
-        const r={kind:'chapter',idx:i,chars:chs[i].chars,customTitle:null,customAnno:null,customFileName:null,xml:null,txt:null,size:0};
+        const r=newResult({kind:'chapter',idx:i,chars:chs[i].chars});
         buildResultXml(r);results.push(r);
         setProg(i+1,chs.length);if(i%2===0)await tick();
       }
-    }else{
+    }else if(mode==='size'){
       lastMode='size';
       const N=getN(),blocks=book.blocks;
       const pref=[];let acc=0;blocks.forEach((b,i)=>{acc+=b.size;pref[i]=acc});
@@ -838,17 +1234,21 @@ async function run(){
       }
       if(start<blocks.length)parts.push(blocks.slice(start));
       lastN=parts.length;
-      if(parts.length<N)$('status').textContent='Частей получилось '+parts.length+' — в книге меньше блоков текста.';
+      if(parts.length<N)$('status').textContent=t('stPartsFew',{n:parts.length});
       for(let k=0;k<parts.length;k++){
         const chars=parts[k].reduce((s,b)=>s+b.size,0);
-        const r={kind:'part',k:k+1,total:parts.length,blocks:parts[k],chars,customTitle:null,customAnno:null,customFileName:null,xml:null,txt:null,size:0};
+        const r=newResult({kind:'part',k:k+1,total:parts.length,blocks:parts[k],chars});
         buildResultXml(r);results.push(r);
         setProg(k+1,parts.length);if(k%2===0)await tick();
       }
+    }else{
+      lastMode='whole';lastN=1;
+      const r=newResult({kind:'whole',chars:book.totalChars});
+      buildResultXml(r);results.push(r);setProg(1,1);
     }
     renderShelfRows();
-    if(!$('status').textContent)$('status').textContent='Готово — файлы на полке справа.';
-  }catch(err){toast('Не удалось разрезать книгу: '+err.message)}
+    if(!$('status').textContent)$('status').textContent=t('stDone');
+  }catch(err){toast(t('splitFailed',{e:err.message}))}
   $('progWrap').classList.remove('on');busy=false;updateGo();
 }
 function setProg(done,total){
@@ -859,27 +1259,26 @@ function setProg(done,total){
 }
 $('go').onclick=run;
 
-/* ── полка ── */
+/* ═══ полка ═══ */
 function renderShelfRows(){
   if(!results.length)return;
   $('emptyShelf').classList.add('hidden');
   $('shelf').classList.remove('hidden');
   const totalSize=results.reduce((s,r)=>s+(r.size||0),0);
-  $('sumText').innerHTML='Готово: <b>'+results.length+'</b> '+plural(results.length,'файл','файла','файлов')+
-    ' · <b>'+fmtBytes(totalSize)+'</b>'+(lastMode==='chapters'?' · по главам':' · равные части');
+  const kind=lastMode==='chapters'?t('kindCh'):lastMode==='whole'?t('kindWhole'):t('kindParts');
+  $('sumText').innerHTML=t('sumReady',{n:results.length,w:tp('files',results.length),size:'<b>'+fmtBytes(totalSize)+'</b>',kind});
   $('zipBtn').disabled=!window.JSZip;
-  if(!window.JSZip)$('zipBtn').title='JSZip не загрузился — скачайте файлы по одному';
   const list=$('files');list.innerHTML='';
   results.forEach((r,i)=>{
     const li=document.createElement('li');li.className='file';li.dataset.i=i;
     li.style.animationDelay=Math.min(i*45,600)+'ms';
     li.style.setProperty('--spine',SPINES[i%SPINES.length]);
-    const tuned=(r.customTitle||r.customAnno!=null||r.customFileName)?'<span class="tuned"> · изменено</span>':'';
+    const tuned=(r.customTitle||r.customAnno!=null||r.customFileName)?'<span class="tuned"> · '+t('tuned')+'</span>':'';
     li.innerHTML='<span class="f-num">'+String(i+1).padStart(2,'0')+'</span>'+
-      '<div class="f-info"><div class="f-name"></div><div class="f-meta">≈ '+fmtNum(r.chars)+' зн.'+tuned+'</div></div>'+
+      '<div class="f-info"><div class="f-name"></div><div class="f-meta">≈ '+fmtNum(r.chars)+' '+t('charsShort')+tuned+'</div></div>'+
       '<div class="f-btns">'+
-      '<button class="ed" title="Изменить метаданные и имя файла"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M11.3 2.3a1.6 1.6 0 0 1 2.3 2.3L5.4 12.8l-3 .7.7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>'+
-      '<button class="dl" title="Скачать (формат выбран на полке)"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0 3.2-3.2M8 10 4.8 6.8M2.5 13.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
+      '<button class="ed" title="'+t('edTitle')+'"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M11.3 2.3a1.6 1.6 0 0 1 2.3 2.3L5.4 12.8l-3 .7.7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>'+
+      '<button class="dl" title="'+t('dlTitle')+'"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0 3.2-3.2M8 10 4.8 6.8M2.5 13.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
       '</div>';
     li.querySelector('.f-name').textContent=baseName(r);
     list.appendChild(li);
@@ -895,7 +1294,7 @@ function resetShelf(){results=[];$('shelf').classList.add('hidden');$('emptyShel
 $('clearShelf').onclick=resetShelf;
 $('zipBtn').onclick=async()=>{
   if(!results.length||!window.JSZip)return;
-  $('zipBtn').disabled=true;$('zipBtn').textContent='Собираю ZIP…';
+  $('zipBtn').disabled=true;$('zipBtn').textContent='⤓ '+t('zipBusy');
   try{
     const zip=new JSZip();
     for(const r of results){
@@ -904,19 +1303,19 @@ $('zipBtn').onclick=async()=>{
     }
     const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}});
     const base=cleanName(book.title)||'book';
-    const tail=lastMode==='chapters'?'по главам':'на '+lastN+' '+plural(lastN,'часть','части','частей');
+    const tail=lastMode==='chapters'?t('zipTailCh'):lastMode==='whole'?t('zipTailWhole'):t('zipTailParts',{n:lastN,w:tp('parts',lastN)});
     download(blob,base+' — '+tail+'.zip');
-    $('status').textContent='ZIP собран и скачивается.';
-  }catch(e){toast('Не удалось собрать ZIP: '+e.message)}
-  $('zipBtn').textContent='⤓ Скачать всё (ZIP)';$('zipBtn').disabled=false;
+    $('status').textContent=t('stZipDone');
+  }catch(e){toast(t('zipFailed',{e:e.message}))}
+  $('zipBtn').textContent='⤓ '+t('zipBtn');$('zipBtn').disabled=false;
 };
 
-/* ── модальное окно файла ── */
+/* ═══ модальное окно файла ═══ */
 function annoPreview(){
   const m=readMeta(book.descrNode);
-  if(!m.anno)return 'У книги сейчас нет аннотации.';
+  if(!m.anno)return t('annoNone');
   const s=m.anno.replace(/\s+/g,' ');
-  return 'Унаследована от книги: «'+(s.length>90?s.slice(0,90)+'…':s)+'»';
+  return t('annoInh',{s:s.length>90?s.slice(0,90)+'…':s});
 }
 function openEdit(i){
   editIdx=i;const r=results[i];
@@ -933,13 +1332,13 @@ $('mSave').onclick=()=>{
   if(editIdx<0)return;
   const r=results[editIdx];
   r.customTitle=$('mTitle').value.trim()||null;
-  r.customFileName=cleanName($('mFile').value.trim())||null;
+  r.customFileName=cleanName($('mFile').value.trim());
   const av=$('mAnno').value.trim();
   r.customAnno=av===''?null:av;
   r.xml=null;r.txt=null;
   buildResultXml(r);
   renderShelfRows();closeEdit();
-  $('status').textContent='Файл обновлён.';
+  $('status').textContent=t('stFileUpd');
 };
 $('mInherit').onclick=()=>{
   if(editIdx<0)return;
@@ -948,13 +1347,13 @@ $('mInherit').onclick=()=>{
   r.xml=null;r.txt=null;
   buildResultXml(r);
   renderShelfRows();closeEdit();
-  $('status').textContent='Файлу возвращены метаданные книги.';
+  $('status').textContent=t('stFileInh');
 };
 $('mCancel').onclick=closeEdit;
 $('modalBg').addEventListener('click',e=>{if(e.target===$('modalBg'))closeEdit()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('modalBg').classList.contains('hidden'))closeEdit()});
 
-/* ── ввод файла ── */
+/* ═══ ввод файла ═══ */
 const drop=$('drop'),inp=$('file');
 drop.addEventListener('click',()=>inp.click());
 drop.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inp.click()}});
@@ -963,6 +1362,8 @@ drop.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDe
 drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('over');handleFile(e.dataTransfer.files[0])});
 inp.addEventListener('change',()=>{handleFile(inp.files[0]);inp.value=''});
 $('replace').onclick=()=>inp.click();
+
+setLang(detectLang(),false);
 </script>
 </body>
 </html>
